@@ -41,7 +41,7 @@ The name *Centaur* symbolizes a **hybrid intelligence**:
 - **Human**: intent, values, override authority
 - **Machine**: consistency, breadth of recall, disciplined reasoning
 
-The logo—a **female centaur**—represents balance rather than dominance:  
+The logo -- a **female centaur** -- represents balance rather than dominance:  
 neither human nor machine alone, but a joint effort.
 
 Human control is always retained.
@@ -171,5 +171,5 @@ without pretending to replace it.
 
 See the `LICENSE` file for details.
 
-## Repository Structure (indicative)
+
 

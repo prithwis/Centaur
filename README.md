@@ -41,4 +41,5 @@ Depending on implementation phase, Centaur may include:
 
 ---
 
+## Repository Structure (indicative)
 

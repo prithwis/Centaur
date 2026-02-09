@@ -56,12 +56,10 @@ except Exception as e:
 from openai import OpenAI
 
 OpenAI_client = OpenAI()
-if not cModel:
-    cModel = "gpt-4o-mini"
 
 # ---------------------------------------------------------------------------------------------------------
 
-def OpenAI_llm_call(system_prompt, user_prompt, model=cModel):          #Great starter, but upgrade recommended
+def OpenAI_llm_call(system_prompt, user_prompt, model="gpt-4o-mini"):          #Great starter, but upgrade recommended
     response = OpenAI_client.chat.completions.create(
         model=model,
         messages=[

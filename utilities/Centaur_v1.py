@@ -103,6 +103,8 @@ def reveal(result: dict, width: int = 80):
     for paragraph in result.get("content", "").strip().split("\n\n"):
         print(textwrap.fill(paragraph.strip(), width=width))
         print()
+        
+    return(result.get("content", ""))
 
 # ---------------------------------------------------------------------------------------------------------
 

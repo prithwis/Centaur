@@ -1,175 +1,104 @@
-# Centaur / Vikram
+# Centaur  
+### A Strategic Simulation Playground
 
-![Centaur Concept](images/logo-L.jpg)
+Centaur is an experimental playground for thinking about strategy, uncertainty, and complex worlds — with a little help from humans, machines, and chance.
 
-## Overview
+It sits somewhere between:
+- a strategy game,
+- a thought experiment,
+- and a long conversation with an opinionated advisor.
 
-**Centaur** is an experimental framework for building **LLM-assisted adjudication and judgment systems**.  
-At its core is **Vikram**, an LLM-based expert that evaluates proposed actions within complex geopolitical, strategic, or economic scenarios.
-
-The project explores how **human judgment and machine reasoning** can be combined—rather than substituted—to assess plausibility, consequences, and trade-offs in situations where outcomes are uncertain and rules are incomplete.
-
-Centaur is explicitly **not** a prediction engine, optimizer, or simulator.  
-It is an **adjudicator**.
-
----
-
-## Rationale
-
-Many real-world decisions—geopolitical crises, industrial strategy, national security, corporate strategy—do not have:
-
-- complete information
-- stable rules
-- guaranteed outcomes
-- a single “correct” answer
-
-Instead, decision-makers evaluate **proposed actions** against:
-- structural constraints
-- second-order effects
-- proportionality
-- uncertainty
-
-Centaur is designed to support this mode of reasoning.
-
-The system treats LLMs as **expert judges**, not as oracles.
+It is **not** a predictor, an optimizer, or a serious model of the world.  
+It is, first and foremost, a **pastime**.
 
 ---
 
-## The Centaur Idea
+## What Is This?
 
-The name *Centaur* symbolizes a **hybrid intelligence**:
-- **Human**: intent, values, override authority
-- **Machine**: consistency, breadth of recall, disciplined reasoning
+Centaur explores questions like:
+- *What happens if you take this action in a messy world?*
+- *How do different perspectives frame the same situation?*
+- *How much of strategy is judgment, and how much is luck?*
 
-The logo -- a **female centaur** -- represents balance rather than dominance:  
-neither human nor machine alone, but a joint effort.
+The system mixes:
+- human choices,
+- AI-generated perspectives,
+- and controlled randomness
 
-Human control is always retained.
-
----
-
-## Vikram: The Adjudicator
-
-**Vikram** is the first implemented adjudicator within the Centaur framework.
-
-### Core characteristics
-
-- Evaluates **plausibility**, not success
-- Does **not** assume actions work as intended
-- Avoids inventing hidden mechanics or rules
-- Assesses second-order and systemic effects conservatively
-- Explicitly states uncertainty when information is insufficient
-
-Vikram operates within a **Matrix Strategy Game** context.
+…to see what kind of stories and consequences emerge.
 
 ---
 
-## Matrix Strategy Game
+## How It’s Meant to Be Used
 
-A **Matrix Strategy Game** evaluates actions across multiple interacting dimensions, such as:
+Think of Centaur as a **sandbox**.
 
-- Political
-- Military
-- Economic
-- Technological
-- Environmental
-- Reputational
+You define a world, make some moves, react to what happens, and repeat.  
+Sometimes the outcome is clever.  
+Sometimes it’s surprising.  
+Sometimes it’s just amusing.
 
-Key principles:
-
-- Player moves are **proposals**, not outcomes
-- The adjudicator does not optimize or simulate perfectly
-- The goal is disciplined reasoning under uncertainty
-
-Centaur provides the adjudication layer for such games.
+There is no “winning.”
+There is no “correct” strategy.
+There is only *what followed from what you did*.
 
 ---
 
-## Input Structure
+## What It Is *Not*
 
-Scenarios are intentionally layered to reflect real decision contexts:
+Centaur does **not**:
+- forecast the real world
+- give policy advice
+- claim objectivity
+- promise accuracy
 
-1. **Background**  
-   Structural, slow-moving context (industry structure, geopolitics, history)
-
-2. **Trigger Event**  
-   A discrete shock or perturbation (sanctions, embargoes, accidents)
-
-3. **Proposed Response**  
-   A policy or strategic action to be evaluated
-
-This separation prevents narrative collapse and retroactive justification.
+If you’re looking for answers, this is the wrong place.  
+If you’re looking for **better questions**, you’re in the right one.
 
 ---
 
-## Human Override
+## Why “Centaur”?
 
-Centaur is **human-supervised by design**.
+Because the project lives in the middle:
+- part human judgment,
+- part machine reasoning.
 
-- LLM adjudication provides structured reasoning
-- Humans may override, reinterpret, or reject rulings
-- The system is a decision aid, not an authority
-
-This is a core principle, not an optional feature.
-
----
-
-## Use Cases
-
-### Geopolitical & Strategic Analysis
-- Sanctions and trade disruptions
-- Industrial policy decisions
-- Supply-chain shocks
-- Escalation and de-escalation choices
-
-### Management & Business School Case Studies
-- Strategy evaluation under uncertainty
-- Competing response options to the same crisis
-- Classroom debate supported by consistent adjudication
-- Comparing short-term vs long-term decision doctrines
-
-### Scenario Stress-Testing
-- Testing “tempting but flawed” responses
-- Comparing different adjudication philosophies
-- Exploring second-order consequences
+Neither is in charge.
+Both are incomplete.
+That’s the point.
 
 ---
 
-## LLM Strategy
+## Status
 
-- Initial implementation uses **OpenAI models**
-- The architecture is intentionally simple
-- Model identity is explicit to allow future comparison
-- The framework is designed to extend to **multiple LLMs** or ensembles if required
+This is a living experiment.
 
-No commitment is made to any single provider.
+Names may change.  
+Rules may change.  
+Structure may change.
 
----
-
-## Project Status
-
-**Early-stage / exploratory**
-
-- Actively evolving
-- Focused on conceptual clarity over feature breadth
-- APIs, roles, and adjudication doctrines may change
-
----
-
-## Philosophy
-
-Centaur is built on a simple idea:
-
-> In complex systems, judgment matters more than prediction.
-
-This project explores how machines can **support** judgment  
-without pretending to replace it.
+That’s not a bug — it’s the design.
 
 ---
 
 ## License
 
+To be decided.
+
+---
+
+> Strategy is easy in clean worlds.  
+> Centaur exists for the messy ones.
+
+
+## License
+
 See the `LICENSE` file for details.
+
+# Centaur
+
+![Centaur Concept](images/logo-L.jpg)
+
 
 
 

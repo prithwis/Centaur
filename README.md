@@ -83,17 +83,13 @@ That’s not a bug — it’s the design.
 
 ## License
 
-To be decided.
+See the `LICENSE` file for details.
 
 ---
 
 > Strategy is easy in clean worlds.  
 > Centaur exists for the messy ones.
 
-
-## License
-
-See the `LICENSE` file for details.
 
 # Centaur
 

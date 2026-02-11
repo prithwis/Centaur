@@ -50,6 +50,7 @@ Semantic Discipline (CRITICAL — ENFORCED):
 - You MUST NOT infer capability changes, dependency changes, strain, pressure, volatility, or systemic stress.
 - You MUST NOT complete causal chains.
 - Stop after stating what is now true.
+- Do NOT restate actions as another actor’s inability, loss, or constraint.
 
 Output Rules:
 - Begin output with the line:

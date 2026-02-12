@@ -93,7 +93,7 @@ def parse_usage(usage):
 
 import textwrap
 
-def reveal(result: dict, width: int = 80):
+def reveal(result: dict, width: int = 100):
     import textwrap
 
     #token_usage = parse_usage(result.get("usage"))
@@ -105,6 +105,55 @@ def reveal(result: dict, width: int = 80):
         print()
         
     return(result.get("content", ""))
+    
+import textwrap
+import re
+
+def interpret(result:dict, width: int =100):
+    """
+    Formats Centaur's structured output cleanly for console display.
+    Preserves bullets and indentation.
+    """
+
+    #token_usage = parse_usage(result.get("usage"))
+    print("Response from ", result.get("header"), parse_usage(result.get("usage")),"\n")
+    print("-" * width)
+    
+    content = result.get("content", "").strip()
+    lines = content.split("\n")
+
+    for line in lines:
+
+        stripped = line.strip()
+
+        # Empty line
+        if not stripped:
+            print()
+            continue
+
+        # Top-level numbered headers (e.g., "1. Verdict:", "2. Explanation:")
+        if re.match(r"^\d+\.", stripped):
+            print()
+            print(textwrap.fill(stripped, width=width))
+            continue
+
+        # Bullet sections (e.g., "- **Strategic Context**:")
+        if stripped.startswith("-"):
+            # Separate bullet marker from text
+            bullet_text = stripped[1:].strip()
+
+            wrapped = textwrap.fill(
+                bullet_text,
+                width=width,
+                initial_indent="   - ",
+                subsequent_indent="     "
+            )
+            print(wrapped)
+            continue
+
+        # Regular wrapped text (fallback)
+        print(textwrap.fill(stripped, width=width))
+
 
 # ---------------------------------------------------------------------------------------------------------
 

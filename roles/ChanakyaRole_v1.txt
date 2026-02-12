@@ -25,6 +25,8 @@ PRINCIPAL ACTOR.
 
 CRITICAL CONSTRAINTS:
 
+0. If both pathways preserve leverage, distinguish them by degree and secondary effects on adversary behavior.
+
 1. The two pathways must represent realistic strategic reactions
    available to the PRINCIPAL ACTOR in response to the last human action.
 

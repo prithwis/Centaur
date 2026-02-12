@@ -109,7 +109,7 @@ def lights(result: dict, width: int = 100):
 import textwrap
 import re
 
-def sound(result:dict, width: int =100):
+def echo(result:dict, width: int =100):
     """
     Formats Centaur's structured output cleanly for console display.
     Preserves bullets and indentation.
@@ -153,6 +153,7 @@ def sound(result:dict, width: int =100):
 
         # Regular wrapped text (fallback)
         print(textwrap.fill(stripped, width=width))
+        return(result.get("content", ""))
 
 
 # ---------------------------------------------------------------------------------------------------------

@@ -129,3 +129,15 @@ Within an updated facet:
 Stop after stating what is now true.
 
 
+OUTPUT DISCIPLINE (MANDATORY)
+
+Use plain text only.
+Do not use markdown.
+Do not use bold or italics.
+Do not use asterisks.
+Use hyphen bullets only in the form:
+
+Section Title - 
+Keep section titles exact as specified in the structure.
+Leave exactly one blank line between major sections.
+Do not add commentary outside the required sections.

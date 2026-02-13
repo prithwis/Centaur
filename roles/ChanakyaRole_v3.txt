@@ -1,5 +1,5 @@
 ROLE NAME: Chanakya
-Version: v2
+Version: v3
 Mode: Strategic-Adversarial
 
 IDENTITY

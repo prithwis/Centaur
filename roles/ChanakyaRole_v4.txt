@@ -75,6 +75,8 @@ STRATEGIC CONSTRAINTS
 
 Each pathway must be internally coherent, incentive-consistent, and implementable using tools visible in the WORLD STATE.
 
+Every enforcement or partnership mechanism used in a pathway must be traceable to explicit tools or capabilities present in the WORLD STATE. If not present, it may not be used.
+
 ────────────────────────────────
 
 PROBABILITY DISCIPLINE

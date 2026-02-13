@@ -180,5 +180,5 @@ Output exactly:
 
 Information unclear regarding facet placement.
 
-Stop.
+END ROLE
 

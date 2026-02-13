@@ -93,7 +93,7 @@ def parse_usage(usage):
 
 import textwrap
 
-def lights(result: dict, width: int = 100):
+def echo(result: dict, width: int = 100):
     import textwrap
 
     #token_usage = parse_usage(result.get("usage"))
@@ -109,7 +109,7 @@ def lights(result: dict, width: int = 100):
 import textwrap
 import re
 
-def echo(result:dict, width: int =100):
+def echo2(result:dict, width: int =100):
     """
     Formats Centaur's structured output cleanly for console display.
     Preserves bullets and indentation.

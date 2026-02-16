@@ -1,86 +1,163 @@
-# Centaur  
-### A Strategic Simulation Playground
+# Centaur
 
-Centaur is an [experimental playground](https://github.com/prithwis/Centaur/tree/main/Documentation) for thinking about strategy, uncertainty, and complex worlds — with a little help from humans, machines, and chance.
+**Enter the Centaur.**
 
-It sits somewhere between:
-- a strategy game,
-- a thought experiment,
-- and a long conversation with an opinionated advisor.
+Centaur is a human–AI hybrid simulation framework designed to adjudicate complex strategic decisions. It was originally built for a geopolitical matrix strategy game, but it can be used to evaluate any structured decision scenario where the “state of the world” matters.
 
-It is **not** a predictor, an optimizer, or a serious model of the world.  
-It is, first and foremost, a **pastime**.
-
+Centaur is not a chatbot.  
+It is a role-structured simulation engine.
 
 ---
 
-## What Is This?
+## What Problem Does This Solve?
 
-Centaur explores questions like:
-- *What happens if you take this action in a messy world?*
-- *How do different perspectives frame the same situation?*
-- *How much of strategy is judgment, and how much is luck?*
+Most LLM applications collapse everything into one stream of text:
 
-The system mixes:
-- human choices,
-- AI-generated perspectives,
-- and controlled randomness
+- Describe the world  
+- Propose an action  
+- Evaluate the action  
+- Anticipate the opponent  
 
-…to see what kind of stories and consequences emerge.
+Centaur separates these functions into distinct roles to make reasoning more disciplined and easier to inspect.
 
----
-
-## How It’s Meant to Be Used
-
-Think of Centaur as a **sandbox**.
-
-You define a world, make some moves, react to what happens, and repeat.  
-Sometimes the outcome is clever.  
-Sometimes it’s surprising.  
-Sometimes it’s just amusing.
-
-There is no “winning.”
-There is no “correct” strategy.
-There is only *what followed from what you did*.
+It is a small experiment in structured AI-mediated cognition.
 
 ---
 
-## What It Is *Not*
+## Architecture Overview
 
-Centaur does **not**:
-- forecast the real world
-- give policy advice
-- claim objectivity
-- promise accuracy
+Centaur consists of three conceptual components:
 
-If you’re looking for answers, this is the wrong place.  
-If you’re looking for **better questions**, you’re in the right one.
+### 1. ZeitWorld  
+Transforms raw geopolitical or narrative text into a structured, faceted world-state representation.
+
+Think of it as a world pre-processor.
+
+### 2. Centaur  
+Acts as a neutral adjudicator.  
+Given a world-state and a proposed action, it produces a structured evaluation.
+
+It does not pursue interests.
+
+### 3. Chanakya (Optional)  
+Represents an incentive-driven actor.  
+Given the updated world-state, it generates strategic responses aligned with its own objectives.
+
+It is explicitly not neutral.
 
 ---
 
-## Why “Centaur”?
+## Design Principle
 
-Because the project lives in the middle:
-- part human judgment,
-- part machine reasoning.
+Each component has:
 
-Neither is in charge.
-Both are incomplete.
-That’s the point.
+- A sharply defined role  
+- A dedicated instruction file  
+- Stable behavior across turns  
+
+Roles are separated deliberately. The idea is to prevent descriptive, evaluative and strategic reasoning from blending into one undifferentiated prompt.
+
+Human oversight is expected between stages.
+
+This is simulation, not automation.
+
+---
+
+## How It Works (High Level)
+
+1. Construct or ingest a narrative description of the world.
+2. ZeitWorld converts it into a faceted representation.
+3. A human proposes an action.
+4. Centaur evaluates the action relative to the current world-state.
+5. Optionally, Chanakya generates a strategic response.
+6. The world-state can then be updated and the cycle repeated.
+
+All outputs are text and can be manually modified before proceeding.
+
+---
+
+## Requirements
+
+- Python 3.x
+- Access to an LLM API (OpenAI, Gemini, Claude, etc.)
+- An API key with sufficient credits
+
+The prototype currently uses `gpt-4o-mini` for cost efficiency, but any compatible model can be substituted.
+
+---
+
+## Running Alpha Centaur
+
+The easiest way to run the prototype is via the provided Google Colab notebook.
+
+### Steps
+
+1. Clone this repository.
+2. Open the Colab notebook.
+3. Insert your API key in the designated cell.
+4. Run cells sequentially.
+5. Modify world descriptions, actions and role instructions as needed.
+
+No advanced Python knowledge is required. Prompt design and world construction are more important than code complexity.
+
+---
+
+## Customization
+
+You can modify:
+
+- Role definition files (highly encouraged)
+- World facets and structure
+- Adjudication criteria
+- Model selection
+- Simulation loop depth
+
+Centaur is intentionally modular and text-driven.
+
+---
+
+## Intended Use Cases
+
+- Geopolitical simulations
+- Classroom strategy games
+- Corporate scenario analysis
+- Structured case study adjudication
+- Experiments in human–AI collaborative reasoning
+
+---
+
+## What This Is Not
+
+- A prediction engine  
+- A reinforcement learning system  
+- A fully autonomous agent  
+- A claim of general intelligence  
+
+It is a structured simulation framework built on top of LLM capabilities.
 
 ---
 
 ## Status
 
-This is a living experiment.
+**Alpha.**
 
-Names may change.  
-Rules may change.  
-Structure may change.
+Expect rough edges.  
+Expect to edit prompts.  
+Expect to experiment.
 
-That’s not a bug — it’s the design.
+That is the point.
 
 ---
+
+## Final Note
+
+Centaur was originally built because one faculty member cannot credibly adjudicate semiconductor geopolitics, rare earth supply chains, nuclear regulation and AI infrastructure policy all at once.
+
+An LLM can help.  
+A structured architecture helps more.
+
+Feedback, forks and thoughtful criticism are welcome.
+
 
 ## License
 

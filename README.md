@@ -92,11 +92,11 @@ The easiest way to run the prototype is via the provided Google Colab notebook.
 
 ### Steps
 
-1. Clone this repository.
-2. Open the Colab notebook.
+1. Go to [Alpha Centaur](https://github.com/prithwis/Centaur/blob/main/Alpha_Centaur.ipynb)
+2. Open the notebook in Google Colab by pressing the blue button. You need a GMail ID to create the Notebook in your Google Drive
 3. Insert your API key in the designated cell.
 4. Run cells sequentially.
-5. Modify world descriptions, actions and role instructions as needed.
+5. Modify world descriptions, actions and role instructions as needed, by substituting your text files.
 
 No advanced Python knowledge is required. Prompt design and world construction are more important than code complexity.
 

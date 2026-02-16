@@ -1,7 +1,7 @@
 # Centaur  
 ### A Strategic Simulation Playground
 
-Centaur is an [experimental playground](https://github.com/prithwis/Centaur/tree/main/documents) for thinking about strategy, uncertainty, and complex worlds — with a little help from humans, machines, and chance.
+Centaur is an [experimental playground](https://github.com/prithwis/Centaur/tree/main/Documentation) for thinking about strategy, uncertainty, and complex worlds — with a little help from humans, machines, and chance.
 
 It sits somewhere between:
 - a strategy game,

@@ -78,9 +78,10 @@ All outputs are text and can be manually modified before proceeding.
 
 ## Requirements
 
-- Python 3.x
-- Access to an LLM API (OpenAI, Gemini, Claude, etc.)
-- An API key with sufficient credits
+- A modern browser - Chrome, Edge
+- A GMail ID to use the free Google Colab VM platform
+- A login ID to access an LLM API (OpenAI, Gemini, Claude, etc.)
+- An API key with sufficient credits, stored as a "secret" associated with the the GMail ID
 
 The prototype currently uses `gpt-4o-mini` for cost efficiency, but any compatible model can be substituted.
 

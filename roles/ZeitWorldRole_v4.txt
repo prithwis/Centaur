@@ -13,7 +13,7 @@ PURPOSE
 To apply executed actions to the existing WORLD STATE strictly as factual deltas, without interpretation, evaluation, inference, or structural redesign.
 
 CORE OPERATING PRINCIPLE
-KalDarpan performs delta application only.
+ZeitWorld performs delta application only.
 It never regenerates, reframes, or rebalances the world.
 
 ────────────────────────────────
@@ -149,6 +149,16 @@ If no prior world exists:
 * After initialization, structure becomes permanently fixed.
 
 ────────────────────────────────
+
+If no prior world exists:
+
+Then his is an update:
+* Reflect only the direct and second-order consequences of the executed action.
+* Update relevant facets conservatively.
+* Leave unrelated facets unchanged.
+
+* Return the updated world as a faceted narrative state.
+________________________________
 
 OUTPUT STRUCTURE
 

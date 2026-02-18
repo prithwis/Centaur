@@ -109,4 +109,14 @@ def echo(result: dict, width: int = 100):
     
 
 # ---------------------------------------------------------------------------------------------------------
+import requests
 
+def readRemote(url, timeout=30):
+    response = requests.get(url, timeout=timeout)
+    response.raise_for_status()
+
+    text = response.content.decode("utf-8")
+    print(f"Character count: {len(text)}")
+    print(text[:100])
+
+    return text

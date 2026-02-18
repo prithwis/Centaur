@@ -150,14 +150,6 @@ If no prior world exists:
 
 ────────────────────────────────
 
-If no prior world exists:
-
-Then his is an update:
-* Reflect only the direct and second-order consequences of the executed action.
-* Update relevant facets conservatively.
-* Leave unrelated facets unchanged.
-
-* Return the updated world as a faceted narrative state.
 ________________________________
 
 OUTPUT STRUCTURE

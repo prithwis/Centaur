@@ -120,3 +120,37 @@ def readRemote(url, timeout=30):
     print(text[:100])
 
     return text
+    
+# ---------------------------------------------------------------------------------------------------------
+
+import requests
+import os
+from urllib.parse import urlparse
+
+def read_source(source, timeout=30):
+    """
+    Reads from either a URL or a local file path.
+    Prints character count and first 100 characters.
+    Returns decoded UTF-8 text.
+    """
+
+    parsed = urlparse(source)
+
+    # If scheme is http/https → treat as URL
+    if parsed.scheme in ("http", "https"):
+        response = requests.get(source, timeout=timeout)
+        response.raise_for_status()
+        text = response.content.decode("utf-8")
+
+    # Otherwise treat as local file
+    else:
+        if not os.path.exists(source):
+            raise FileNotFoundError(f"Local file not found: {source}")
+
+        with open(source, "r", encoding="utf-8") as f:
+            text = f.read()
+
+    print(f"Character count: {len(text)}")
+    print(text[:100])
+
+    return text

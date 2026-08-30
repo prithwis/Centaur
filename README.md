@@ -74,6 +74,8 @@ This is simulation, not automation.
 
 All outputs are text and can be manually modified before proceeding.
 
+![Centaur Workflow](https://raw.githubusercontent.com/prithwis/Centaur/refs/heads/main/images/CentaurPipeline.png)
+
 ---
 
 ## Requirements

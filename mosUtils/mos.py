@@ -115,11 +115,12 @@ Input=f"""
     """
 
 
-    return response = client.responses.create(
-        model=_model,
-        instructions=systemPrompt,
-        input=userPrompt
-    ).output_text
+    return callLLM(
+    client,
+    Role,
+    Input,
+    _model
+    )
 
 
     

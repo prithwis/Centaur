@@ -146,14 +146,14 @@ def GetWorld(client, Role, pdf_file, md_dir, _model="gpt-5-mini"):
     cleanMD = LLM_CleanPDF(
         client, Role,
         rawText,
-        pdf_path.name,
+        pdf_file.name,
         _model
     )
 
     # Add provenance header
     header = f"""# SOURCE: {pdf_path.stem}
 
-**Source PDF:** `{pdf_path.name}`
+**Source PDF:** `{pdf_file.name}`
 
 ---
 

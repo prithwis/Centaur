@@ -151,7 +151,7 @@ def GetWorld(client, Role, pdf_file, md_dir, _model="gpt-5-mini"):
     )
 
     # Add provenance header
-    header = f"""# SOURCE: {pdf_path.stem}
+    header = f"""# SOURCE: {pdf_file.stem}
 
 **Source PDF:** `{pdf_file.name}`
 

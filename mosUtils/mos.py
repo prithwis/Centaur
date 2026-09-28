@@ -125,12 +125,12 @@ from pathlib import Path
 
 def GetWorld(client, Role, pdf_file, md_dir, _model="gpt-5-mini"):
 
-    pdf_path = Path(pdf_path)
+    pdf_file = Path(pdf_file)
     #md_path  = Path(md_path)
     
    # Generate MD filename automatically
     md_path = makeMDName(
-        pdf_path,
+        pdf_file,
         md_dir,
         length=20
     )

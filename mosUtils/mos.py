@@ -96,13 +96,44 @@ def LLM_CleanPDF(client,Role, rawText, sourceName, _model):
 
 
     
-# ------------------------------------------------------------------------------------------------------------------    
+# ------------------------------------------------------------------------------------------------------------------   
+
+from pathlib import Path
+from datetime import datetime
+import re
+
+def makeMDName(pdf_file, md_dir, length=20):
+
+    # Original PDF filename without extension
+    stem = Path(pdf_file).stem
+
+    # Remove blanks and special characters
+    stem = re.sub(r'[^A-Za-z0-9]', '', stem)
+
+    # First 20 characters
+    stem = stem[:length]
+
+    # Creation date: YYMMDD
+    date = datetime.now().strftime("%y%m%d")
+
+    # filename: 20chars_yymmdd.md
+    return Path(md_dir) / f"{stem}_{date}.md"
+
+
+ 
 from pathlib import Path
 
 def GetWorld(client, Role, pdf_path, md_path, _model="gpt-5-mini"):
 
     pdf_path = Path(pdf_path)
-    md_path  = Path(md_path)
+    #md_path  = Path(md_path)
+    
+   # Generate MD filename automatically
+    md_path = makeMDName(
+        pdf_path,
+        md_dir,
+        length=20
+    )
 
     print(f"Reading  : {pdf_path.name}")
 

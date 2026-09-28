@@ -135,7 +135,7 @@ def GetWorld(client, Role, pdf_file, md_dir, _model="gpt-5-mini"):
         length=20
     )
 
-    print(f"Reading  : {pdf_path.name}")
+    print(f"Reading  : {pdf_file.name}")
 
     # Step 1: PDF → raw text
     rawText = PDF_to_Text(pdf_file)

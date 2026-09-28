@@ -71,37 +71,9 @@ def PDF_to_Text(pdf_path):
     return "\n".join(pages)
    
 # ------------------------------------------------------------------------------------------------------------------   
-def LLM_CleanPDF(client, rawText, sourceName, _model):
+def LLM_CleanPDF(client,Role, rawText, sourceName, _model):
 
-    Role = """
-    You are a document-cleaning engine.
-
-    Your task is to convert raw text extracted from a PDF into
-    clean, well-structured Markdown.
-
-    RULES
-
-    1. Preserve ALL substantive factual content.
-    2. Preserve all numbers, dates, quantities, percentages,
-       names, units and factual claims.
-    3. Preserve meaningful headings and section structure.
-    4. Preserve useful tables. Reconstruct them as Markdown
-       tables where reasonably possible.
-    5. Remove advertisements, navigation menus, subscription
-       prompts, cookie notices, social-media links, repeated
-       headers and footers, page furniture and similar junk.
-    6. Repair obvious line-break, hyphenation and formatting
-       damage introduced by PDF extraction.
-    7. Do NOT summarize.
-    8. Do NOT interpret.
-    9. Do NOT add information.
-    10. Do NOT use outside knowledge.
-    11. Do NOT correct or reconcile factual claims.
-    12. If something is genuinely unclear or corrupted,
-        preserve it rather than inventing content.
-
-    Return ONLY the cleaned Markdown document.
-    """
+    
 
 
     Input=f"""
@@ -127,7 +99,7 @@ def LLM_CleanPDF(client, rawText, sourceName, _model):
 # ------------------------------------------------------------------------------------------------------------------    
 from pathlib import Path
 
-def GetWorld(client, pdf_path, md_path, _model="gpt-5-mini"):
+def GetWorld(client, Role, pdf_path, md_path, _model="gpt-5-mini"):
 
     pdf_path = Path(pdf_path)
     md_path  = Path(md_path)
@@ -141,7 +113,7 @@ def GetWorld(client, pdf_path, md_path, _model="gpt-5-mini"):
 
     # Step 2: raw text → clean Markdown
     cleanMD = LLM_CleanPDF(
-        client,
+        client, Role,
         rawText,
         pdf_path.name,
         _model

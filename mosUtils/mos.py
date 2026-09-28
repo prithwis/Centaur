@@ -175,7 +175,7 @@ def GetWorld(client, Role, pdf_file, md_dir, _model="gpt-5-mini"):
     print(f"Created  : {md_path.name}")
     print(f"Markdown : {len(cleanMD):,} characters")
 
-    return cleanMD
+    return md_path
     
 # ------------------------------------------------------------------------------------------------------------------
 from IPython.display import display, Markdown

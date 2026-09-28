@@ -123,7 +123,7 @@ def makeMDName(pdf_file, md_dir, length=20):
  
 from pathlib import Path
 
-def GetWorld(client, Role, pdf_file, md_dir, _model="gpt-5-mini"):
+def GetWorldFile(client, Role, pdf_file, md_dir, _model="gpt-5-mini"):
 
     pdf_file = Path(pdf_file)
     #md_path  = Path(md_path)

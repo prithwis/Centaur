@@ -42,6 +42,19 @@ def authenticateOpenAI():
         return None
 		
 # ------------------------------------------------------------------------------------------------------------------
+
+def callLLM(client, _Role, _Input, _model):
+
+    response = client.responses.create(
+        model=_model,
+        instructions=_Role,
+        input=_Input
+    )
+
+    return response.output_text
+
+# ------------------------------------------------------------------------------------------------------------------
+
 import pymupdf
 
 def PDF_to_Text(pdf_path):
@@ -60,51 +73,55 @@ def PDF_to_Text(pdf_path):
 # ------------------------------------------------------------------------------------------------------------------   
 def LLM_CleanPDF(client, rawText, sourceName, _model):
 
-    systemPrompt = """
-You are a document-cleaning engine.
+    Role = """
+    You are a document-cleaning engine.
 
-Your task is to convert raw text extracted from a PDF into
-clean, well-structured Markdown.
+    Your task is to convert raw text extracted from a PDF into
+    clean, well-structured Markdown.
 
-RULES
+    RULES
 
-1. Preserve ALL substantive factual content.
-2. Preserve all numbers, dates, quantities, percentages,
-   names, units and factual claims.
-3. Preserve meaningful headings and section structure.
-4. Preserve useful tables. Reconstruct them as Markdown
-   tables where reasonably possible.
-5. Remove advertisements, navigation menus, subscription
-   prompts, cookie notices, social-media links, repeated
-   headers and footers, page furniture and similar junk.
-6. Repair obvious line-break, hyphenation and formatting
-   damage introduced by PDF extraction.
-7. Do NOT summarize.
-8. Do NOT interpret.
-9. Do NOT add information.
-10. Do NOT use outside knowledge.
-11. Do NOT correct or reconcile factual claims.
-12. If something is genuinely unclear or corrupted,
-    preserve it rather than inventing content.
+    1. Preserve ALL substantive factual content.
+    2. Preserve all numbers, dates, quantities, percentages,
+       names, units and factual claims.
+    3. Preserve meaningful headings and section structure.
+    4. Preserve useful tables. Reconstruct them as Markdown
+       tables where reasonably possible.
+    5. Remove advertisements, navigation menus, subscription
+       prompts, cookie notices, social-media links, repeated
+       headers and footers, page furniture and similar junk.
+    6. Repair obvious line-break, hyphenation and formatting
+       damage introduced by PDF extraction.
+    7. Do NOT summarize.
+    8. Do NOT interpret.
+    9. Do NOT add information.
+    10. Do NOT use outside knowledge.
+    11. Do NOT correct or reconcile factual claims.
+    12. If something is genuinely unclear or corrupted,
+        preserve it rather than inventing content.
 
-Return ONLY the cleaned Markdown document.
-"""
+    Return ONLY the cleaned Markdown document.
+    """
 
-    response = client.responses.create(
+
+Input=f"""
+    SOURCE DOCUMENT: {sourceName}
+
+    ====================
+    RAW PDF TEXT
+    ====================
+
+    {rawText}
+    """
+
+
+    return response = client.responses.create(
         model=_model,
         instructions=systemPrompt,
-        input=f"""
-SOURCE DOCUMENT: {sourceName}
+        input=userPrompt
+    ).output_text
 
-====================
-RAW PDF TEXT
-====================
 
-{rawText}
-"""
-    )
-
-    return response.output_text
     
 # ------------------------------------------------------------------------------------------------------------------    
 from pathlib import Path

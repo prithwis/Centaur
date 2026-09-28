@@ -123,7 +123,7 @@ def makeMDName(pdf_file, md_dir, length=20):
  
 from pathlib import Path
 
-def GetWorld(client, Role, pdf_path, _model="gpt-5-mini"):
+def GetWorld(client, Role, pdf_file, md_dir, _model="gpt-5-mini"):
 
     pdf_path = Path(pdf_path)
     #md_path  = Path(md_path)
@@ -138,7 +138,7 @@ def GetWorld(client, Role, pdf_path, _model="gpt-5-mini"):
     print(f"Reading  : {pdf_path.name}")
 
     # Step 1: PDF → raw text
-    rawText = PDF_to_Text(pdf_path)
+    rawText = PDF_to_Text(pdf_file)
 
     print(f"Extracted: {len(rawText):,} characters")
 

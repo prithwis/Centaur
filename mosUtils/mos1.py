@@ -233,3 +233,42 @@ def get_stories(mc_links, batch_size=10, delay=0.5):
     print(f"Valid stories  : {len(stories)}")
 
     return stories
+    
+# ------------------------------------------------------------------------
+# Creates MOS LiveFeed file from scored stories
+# ------------------------------------------------------------------------
+
+from datetime import datetime
+from pathlib import Path
+
+def CreateLiveFeed(stories, cutoff):
+
+    selected = [
+        s for s in stories
+        if s["score"] >= cutoff
+    ]
+
+    timestamp = datetime.now().strftime("%y%m%d_%H%M")
+
+    filename = Path(
+        f"MOS-MC-LiveFeed_{timestamp}.txt"
+    )
+
+    with open(filename, "w", encoding="utf-8") as f:
+
+        for i, s in enumerate(selected, 1):
+
+            f.write("=" * 80 + "\n")
+            f.write(f"STORY  : {i}\n")
+            f.write(f"SCORE  : {s['score']}\n")
+            f.write(f"TITLE  : {s['title']}\n")
+            f.write(f"SOURCE : {s['source']}\n")
+            f.write(f"URL    : {s['url']}\n")
+            f.write("-" * 80 + "\n")
+            f.write(s["content"])
+            f.write("\n\n")
+
+    print(f"Stories selected : {len(selected)}")
+    print(f"File created     : {filename}")
+
+    return filename

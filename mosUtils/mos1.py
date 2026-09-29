@@ -1,9 +1,8 @@
-# ------------------------------------------------------------------------------------------------------------------
 # =============================================================================
 # CENTAUR : MOS — Middle East Oil Security
 # Prithwis Mukerjee | 2026
 # =============================================================================
-# ------------------------------------------------------------------------------------------------------------------
+
 
 import mos
 
@@ -28,29 +27,15 @@ def PDF_to_Text(pdf_path):
 # ------------------------------------------------------------------------------------------------------------------   
 def LLM_CleanPDF(client,Role, rawText, sourceName, _model):
 
-    
-
-
     Input=f"""
     SOURCE DOCUMENT: {sourceName}
-
     ====================
     RAW PDF TEXT
     ====================
-
     {rawText}
     """
+    return mos.callLLM(client,Role,Input,_model)
 
-
-    return mos.callLLM(
-    client,
-    Role,
-    Input,
-    _model
-    )
-
-
-    
 # ------------------------------------------------------------------------------------------------------------------   
 
 from pathlib import Path
@@ -61,21 +46,17 @@ def makeMDName(pdf_file, md_dir, length=20):
 
     # Original PDF filename without extension
     stem = Path(pdf_file).stem
-
     # Remove blanks and special characters
     stem = re.sub(r'[^A-Za-z0-9]', '', stem)
-
     # First 20 characters
     stem = stem[:length]
-
     # Creation date: YYMMDD
     date = datetime.now().strftime("%y%m%d")
-
     # filename: 20chars_yymmdd.md
     return Path(md_dir) / f"{stem}_{date}.md"
 
 
- 
+# ------------------------------------------------------------------------------------------------------------------    
 from pathlib import Path
 
 def GetWorldFile(client, Role, pdf_file, md_dir, _model="gpt-5-mini"):
@@ -84,48 +65,29 @@ def GetWorldFile(client, Role, pdf_file, md_dir, _model="gpt-5-mini"):
     #md_path  = Path(md_path)
     
    # Generate MD filename automatically
-    md_path = makeMDName(
-        pdf_file,
-        md_dir,
-        length=20
-    )
-
+    md_path = makeMDName(pdf_file, md_dir,length=20)
     print(f"Reading  : {pdf_file.name}")
 
     # Step 1: PDF → raw text
     rawText = PDF_to_Text(pdf_file)
-
     print(f"Extracted: {len(rawText):,} characters")
 
     # Step 2: raw text → clean Markdown
-    cleanMD = LLM_CleanPDF(
-        client, Role,
-        rawText,
-        pdf_file.name,
-        _model
-    )
+    cleanMD = LLM_CleanPDF(client, Role,rawText,pdf_file.name,_model)
 
     # Add provenance header
     header = f"""# SOURCE: {pdf_file.stem}
 
-**Source PDF:** `{pdf_file.name}`
+    **Source PDF:** `{pdf_file.name}`
 
----
+    ---
 
-"""
-
+    """
     cleanMD = header + cleanMD
 
     # Step 3: save
-    md_path.parent.mkdir(
-        parents=True,
-        exist_ok=True
-    )
-
-    md_path.write_text(
-        cleanMD,
-        encoding="utf-8"
-    )
+    md_path.parent.mkdir( parents=True, exist_ok=True)
+    md_path.write_text(cleanMD,encoding="utf-8")
 
     print(f"Created  : {md_path.name}")
     print(f"Markdown : {len(cleanMD):,} characters")

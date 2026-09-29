@@ -45,12 +45,24 @@ def authenticateOpenAI():
 		
 # ------------------------------------------------------------------------------------------------------------------
 
-def callLLM(client, _Role, _Input, _model):
+def xcallLLM(client, _Role, _Input, _model):
 
     response = client.responses.create(
         model=_model,
         instructions=_Role,
         input=_Input
+    )
+
+    return response.output_text
+    
+    
+def callLLM(client, _Role, _Input, _model, _effort="medium"):
+
+    response = client.responses.create(
+        model=_model,
+        instructions=_Role,
+        input=_Input,
+        reasoning={"effort": _effort}
     )
 
     return response.output_text

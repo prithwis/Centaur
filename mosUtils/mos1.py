@@ -100,3 +100,131 @@ from IPython.display import display, Markdown
 def ShowMD(md_path):
     with open(md_path, "r", encoding="utf-8") as f:
         display(Markdown(f.read()))
+        
+# ------------------------------------------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------
+# Prepares a list of MoneyControl URLs for a specified section
+# ------------------------------------------------------------------------
+
+def get_mc_links(baseURL, section):
+
+    res = requests.get(baseURL, headers=HEADERS)
+    soup = BeautifulSoup(res.text, "html.parser")
+
+    links = set()
+
+    for a in soup.find_all("a", href=True):
+
+        href = a["href"]
+
+        if (
+            href.startswith("https://www.moneycontrol.com/")
+            and section in href
+        ):
+            links.add(href)
+
+    print(f"{section} links located : {len(links)}")
+
+    return list(links)
+    
+# ------------------------------------------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------
+# Extracts text from ONE MoneyControl URL
+# ------------------------------------------------------------------------
+
+def extract_mc(url):
+
+    try:
+        res = requests.get(url, headers=HEADERS)
+        soup = BeautifulSoup(res.text, "html.parser")
+
+        # Title
+        h1 = soup.find("h1")
+
+        if not h1:
+            return None
+
+        title = h1.get_text(strip=True)
+
+        # Target article content container
+        container = (
+            soup.find("div", class_="content_wrapper") or
+            soup.find("div", id="contentdata")
+        )
+
+        if not container:
+            return None
+
+        paragraphs = container.find_all("p")
+
+        clean = []
+
+        for p in paragraphs:
+
+            text = p.get_text(" ", strip=True)
+
+            # Remove junk
+            if any(x in text.lower() for x in [
+                "follow us",
+                "invest now",
+                "advertisement",
+                "click here",
+                "watch video"
+            ]):
+                continue
+
+            if len(text.split()) < 8:
+                continue
+
+            clean.append(text)
+
+        if len(clean) < 3:
+            return None
+
+        return {
+            "title": title,
+            "content": " ".join(clean[:6]),
+            "source": "Moneycontrol",
+            "url": url
+        }
+
+    except Exception as e:
+        print("Error:", e)
+        return None
+        
+# ------------------------------------------------------------------------
+# Extracts valid stories from discovered MoneyControl links
+# ------------------------------------------------------------------------
+
+def get_stories(mc_links, batch_size=10, delay=0.5):
+
+    stories = []
+    total = len(mc_links)
+
+    for i, u in enumerate(mc_links, 1):
+
+        art = extract_mc(u)
+
+        if art:
+            stories.append(art)
+
+        # Status + throttle after every batch of 10
+        if i % batch_size == 0:
+            print(
+                f"Processed {i}/{total} | Valid stories: {len(stories)}"
+            )
+            time.sleep(delay)
+
+    # Print final partial batch, if any
+    if total % batch_size != 0:
+        print(
+            f"Processed {total}/{total} | Valid stories: {len(stories)}"
+        )
+
+    print("-" * 40)
+    print(f"Links examined : {total}")
+    print(f"Valid stories  : {len(stories)}")
+
+    return stories

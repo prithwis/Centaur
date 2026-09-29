@@ -198,6 +198,11 @@ def extract_mc(url):
 # Extracts valid stories from discovered MoneyControl links
 # ------------------------------------------------------------------------
 
+import requests
+from bs4 import BeautifulSoup
+
+HEADERS = {"User-Agent": "Mozilla/5.0"}
+
 def get_stories(mc_links, batch_size=10, delay=0.5):
 
     stories = []

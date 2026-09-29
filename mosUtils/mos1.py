@@ -239,6 +239,7 @@ def get_stories(mc_links, batch_size=10, delay=0.5):
 # ------------------------------------------------------------------------
 
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 def CreateLiveFeed(stories, cutoff):
@@ -248,11 +249,10 @@ def CreateLiveFeed(stories, cutoff):
         if s["score"] >= cutoff
     ]
 
-    timestamp = datetime.now().strftime("%y%m%d_%H%M")
+    timestamp = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%y%m%d_%H%M_IST")
 
-    filename = Path(
-        f"MOS-MC-LiveFeed_{timestamp}.txt"
-    )
+    filename = Path(f"MOS-MC-LiveFeed_{timestamp}.txt")
+)
 
     with open(filename, "w", encoding="utf-8") as f:
 

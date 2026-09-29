@@ -252,7 +252,6 @@ def CreateLiveFeed(stories, cutoff):
     timestamp = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%y%m%d_%H%M_IST")
 
     filename = Path(f"MOS-MC-LiveFeed_{timestamp}.txt")
-)
 
     with open(filename, "w", encoding="utf-8") as f:
 

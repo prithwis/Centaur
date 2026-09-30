@@ -47,6 +47,8 @@ class WorldState:
         )
 # =============================================================================      
 
+from pathlib import Path
+
 def getWorldFactBase(WORLDFACTS):
     MD_PATH   = Path(WORLDFACTS) / "MD"
     NEWS_PATH = Path(WORLDFACTS) / "NEWS"

@@ -46,6 +46,40 @@ class WorldState:
             variables=variables
         )
 # =============================================================================      
+
+def getWorldFactBase(WORLDFACTS):
+    MD_PATH   = Path(WORLDFACTS) / "MD"
+    NEWS_PATH = Path(WORLDFACTS) / "NEWS"
+
+    parts = []
+
+    # Static sources
+    for file in sorted(MD_PATH.glob("*.md")):
+        text = file.read_text(encoding="utf-8")
+
+        parts.append(
+            f"\n===== STATIC SOURCE: {file.name} =====\n{text}"
+        )
+
+    # Dynamic news source
+    for file in sorted(NEWS_PATH.glob("*.txt")):
+        text = file.read_text(encoding="utf-8")
+
+        parts.append(
+            f"\n===== LIVE SOURCE: {file.name} =====\n{text}"
+        )
+
+    WorldFactBase = "\n".join(parts)
+    
+    print("Static sources :", len(list(MD_PATH.glob("*.md"))))
+    print("Live sources   :", len(list(NEWS_PATH.glob("*.txt"))))
+    print("Characters     :", f"{len(WorldFactBase):,}")
+    print("Words          :", f"{len(WorldFactBase.split()):,}")
+
+    return WorldFactBase
+
+
+
 class ZeitWorld_Agent:
 
     def __init__(self, client, model, role):

@@ -80,7 +80,7 @@ def getWorldFactBase(WORLDFACTS):
 
     return WorldFactBase
 
-
+# =============================================================================      
 
 class ZeitWorld_Agent:
 
@@ -90,6 +90,7 @@ class ZeitWorld_Agent:
         self.role = role
         self.initialised = False
 
+# -------------      
 
     def initialise(self, world_state, world_facts, init_input):
         """
@@ -131,6 +132,96 @@ class ZeitWorld_Agent:
 
         return new_state
 
+# -------------      
+
+    def show(self, world_state, n=-1):
+        """
+        Display a WorldState at different levels of detail.
+
+        n = -2       : vector values only
+        n = -1       : vector names and values (default)
+        0 <= n < N   : complete details of vector n
+        n >= N       : complete details of all vectors
+        """
+
+        variables = world_state.variables
+        N = len(variables)
+
+        # ---------------------------------------------------------
+        # -2 : Values only
+        # ---------------------------------------------------------
+        if n == -2:
+            print([v.index for v in variables])
+            return
+
+
+        # ---------------------------------------------------------
+        # -1 : Names and values (default)
+        # ---------------------------------------------------------
+        if n == -1:
+
+            print(f"\nWorld State : {world_state.state_id}")
+            print("-" * 55)
+
+            for i, v in enumerate(variables):
+                print(f"{i:2d}  {v.name:<32} {v.index:8.2f}")
+
+            return
+
+
+        # ---------------------------------------------------------
+        # Helper for detailed display
+        # ---------------------------------------------------------
+        def show_variable(i):
+
+            v = variables[i]
+
+            print(f"\nVector {i} : {v.name}")
+            print("-" * 70)
+
+            print(f"Index       : {v.index}")
+            print(f"Description : {v.description}")
+            print(f"Direction   : {v.direction}")
+            print(f"Status      : {v.status}")
+            print("Conditions  :")
+
+            if v.conditions:
+                for condition in v.conditions:
+                    print(f"  - {condition}")
+            else:
+                print("  - None")
+
+
+        # ---------------------------------------------------------
+        # 0 ... N-1 : Complete details of one vector
+        # ---------------------------------------------------------
+        if 0 <= n < N:
+
+            print(f"\nWorld State : {world_state.state_id}")
+            show_variable(n)
+            return
+
+
+        # ---------------------------------------------------------
+        # N or greater : Complete details of all vectors
+        # ---------------------------------------------------------
+        if n >= N:
+
+            print(f"\nWorld State : {world_state.state_id}")
+            print("=" * 70)
+
+            for i in range(N):
+                show_variable(i)
+
+            return
+
+
+        # ---------------------------------------------------------
+        # Less than -2 : invalid
+        # ---------------------------------------------------------
+        print(f"Invalid show parameter: {n}")
+
+# -------------      
 
     def update(self, current_state, action):
         """

@@ -65,6 +65,21 @@ def callLLM(client, _Role, _Input, _model, _effort="medium"):
         reasoning={"effort": _effort}
     )
 
+     reasoning_tokens = getattr(
+        usage.output_tokens_details,
+        "reasoning_tokens",
+        0
+    )
+
+    print(
+        f"Model: {response.model} | "
+        f"Effort: {_effort} | "
+        f"Input: {usage.input_tokens:,} | "
+        f"Output: {usage.output_tokens:,} | "
+        f"Reasoning: {reasoning_tokens:,} | "
+        f"Total: {usage.total_tokens:,}"
+    )
+
     return response.output_text
 
 # ------------------------------------------------------------------------------------------------------------------

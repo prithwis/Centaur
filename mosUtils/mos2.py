@@ -46,7 +46,7 @@ class WorldState:
             variables=variables
         )
 # =============================================================================      
-class ZeitWorld:
+class ZeitWorld_Agent:
 
     def __init__(self, client, model, role):
         self.client = client

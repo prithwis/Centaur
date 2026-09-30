@@ -21,6 +21,7 @@ class WorldVariable:
     conditions: list[str] = field(default_factory=list)
 
 # =============================================================================
+
 @dataclass
 class WorldState:
     state_id: str
@@ -31,6 +32,18 @@ class WorldState:
             self,
             default=lambda o: o.__dict__,
             indent=2
+        )
+
+    @classmethod
+    def from_dict(cls, data):
+        variables = [
+            WorldVariable(**v)
+            for v in data["variables"]
+        ]
+
+        return cls(
+            state_id=data["state_id"],
+            variables=variables
         )
 # =============================================================================      
 class ZeitWorld:

@@ -48,13 +48,14 @@ class WorldState:
 # =============================================================================      
 class ZeitWorld:
 
-    def __init__(self, client, model):
+    def __init__(self, client, model, role):
         self.client = client
         self.model = model
+        self.role = role
         self.initialised = False
 
 
-    def initialise(self, world_state, world_facts):
+    def initialise(self, world_state, world_facts, init_input):
         """
         Create Z0 from real-world evidence.
 
@@ -66,11 +67,33 @@ class ZeitWorld:
         if self.initialised:
             raise RuntimeError("ZeitWorld has already been initialised.")
 
-        # LLM processing will go here
+        full_input = f"""
+        {init_input}
+
+        WORLDSTATE TEMPLATE
+        ===================
+        {world_state.to_json()}
+
+        WORLD FACTS
+        ===========
+        {world_facts}
+        """
+
+        response = callLLM(
+            self.client,
+            self.role,
+            full_input,
+            self.model,
+            _effort="medium"
+        )
+
+        data = json.loads(response)
+
+        new_state = WorldState.from_dict(data)
 
         self.initialised = True
 
-        return world_state
+        return new_state
 
 
     def update(self, current_state, action):

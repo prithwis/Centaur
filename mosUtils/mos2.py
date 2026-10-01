@@ -187,7 +187,7 @@ class ZeitWorld_Agent:
 
 # -------------      
 
-    def initialise(self, world_state, world_facts, init_prompt):
+    def initialise(self, world_list, world_template, world_facts, init_prompt):
         """
         Create W0 from real-world evidence.
 
@@ -204,7 +204,7 @@ class ZeitWorld_Agent:
 
         WORLDSTATE TEMPLATE
         ===================
-        {world_state.to_json()}
+        {world_template.to_json()}
 
         WORLD FACTS
         ===========
@@ -221,6 +221,12 @@ class ZeitWorld_Agent:
 
         data = json.loads(response)
         new_state = WorldState.from_dict(data)
+        
+        # Python controls identity
+        new_state.state_id = "W0"
+
+        # W0 immediately becomes part of world history
+        world_list.append(new_state)
         self.initialised = True
 
         return new_state
@@ -237,78 +243,7 @@ class ZeitWorld_Agent:
         n >= N       : complete details of all vectors
         """
 
-        variables = world_state.variables
-        N = len(variables)
-
-        # ---------------------------------------------------------
-        # -2 : Values only
-        # ---------------------------------------------------------
-        if n == -2:
-            print([v.index for v in variables])
-            return
-
-
-        # ---------------------------------------------------------
-        # -1 : Names and values (default)
-        # ---------------------------------------------------------
-        if n == -1:
-
-            print(f"\nWorld State : {world_state.state_id}")
-            print("-" * 55)
-
-            for i, v in enumerate(variables):
-                print(f"{i:2d}  {v.name:<32} {v.index:8.2f}")
-
-            return
-
-
-        # ---------------------------------------------------------
-        # Helper for detailed display
-        # ---------------------------------------------------------
-        def show_variable(i):
-
-            v = variables[i]
-
-            print(f"\nVector {i} : {v.name}")
-            print("-" * 70)
-
-            print(f"Index       : {v.index}")
-            print(f"Description : {v.description}")
-            print(f"Direction   : {v.direction}")
-            print(f"Status      : {v.status}")
-            print("Conditions  :")
-
-            if v.conditions:
-                for condition in v.conditions:
-                    print(f"  - {condition}")
-            else:
-                print("  - None")
-
-
-        # ---------------------------------------------------------
-        # 0 ... N-1 : Complete details of one vector
-        # ---------------------------------------------------------
-        if 0 <= n < N:
-
-            print(f"\nWorld State : {world_state.state_id}")
-            show_variable(n)
-            return
-
-
-        # ---------------------------------------------------------
-        # N or greater : Complete details of all vectors
-        # ---------------------------------------------------------
-        if n >= N:
-
-            print(f"\nWorld State : {world_state.state_id}")
-            print("=" * 70)
-
-            for i in range(N):
-                show_variable(i)
-
-            return
-
-
+       
         # ---------------------------------------------------------
         # Less than -2 : invalid
         # ---------------------------------------------------------
@@ -316,12 +251,11 @@ class ZeitWorld_Agent:
 
 # -------------      
 
-    def update(self, current_state, event, update_prompt):
+    def update(self, world_list, event, update_prompt):
         """
-        Generate the next WorldState from the current WorldState
-        and one executed Event.
-
-        No external real-world information is available here.
+        Apply an executed Event to the current WorldState,
+        create W[t+1], append it to world_list,
+        and return the new WorldState.
         """
 
         if not self.initialised:
@@ -329,7 +263,9 @@ class ZeitWorld_Agent:
                 "ZeitWorld must be initialised before update."
             )
 
-        # Determine next state ID
+        current_state = world_list[-1]
+        print("Updating WorldState ----------", current_state.state_id)
+        
         current_number = int(current_state.state_id[1:])
         next_state_id = f"W{current_number + 1}"
 
@@ -358,14 +294,16 @@ class ZeitWorld_Agent:
             _effort="medium"
         )
 
-        # Convert returned JSON into WorldState
         data = json.loads(response)
 
         new_state = WorldState.from_dict(data)
 
-        # State numbering is controlled by Python, not the LLM
+        # Python controls state identity
         new_state.state_id = next_state_id
 
+        # A successfully generated state immediately becomes history
+        world_list.append(new_state)
+        print("Appended  WorldState ----------", new_state.state_id)
         return new_state
 # =============================================================================
 

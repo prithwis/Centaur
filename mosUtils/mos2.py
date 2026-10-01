@@ -18,6 +18,7 @@ class WorldVariable:
 
     index: float = 100
     status: str = ""
+    rationale: str = ""
     conditions: list[str] = field(default_factory=list)
 
 # =============================================================================

@@ -98,9 +98,9 @@ class ZeitWorld_Agent:
 
 # -------------      
 
-    def initialise(self, world_state, world_facts, init_input):
+    def initialise(self, world_state, world_facts, init_prompt):
         """
-        Create Z0 from real-world evidence.
+        Create W0 from real-world evidence.
 
         This method may be called only once.
         All WorldVariable indices remain at 100.
@@ -111,7 +111,7 @@ class ZeitWorld_Agent:
             raise RuntimeError("ZeitWorld has already been initialised.")
 
         full_input = f"""
-        {init_input}
+        {init_prompt}
 
         WORLDSTATE TEMPLATE
         ===================

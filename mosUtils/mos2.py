@@ -97,6 +97,7 @@ class WorldState:
             print(f"Description : {v.description}")
             print(f"Direction   : {v.direction}")
             print(f"Status      : {v.status}")
+            print(f"Rationale   : {v.rationale}")
             print("Conditions  :")
 
             if v.conditions:

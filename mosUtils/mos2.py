@@ -199,6 +199,8 @@ class ZeitWorld_Agent:
         if self.initialised:
             raise RuntimeError("ZeitWorld has already been initialised.")
 
+        print("Initialising WorldState ... ")
+
         full_input = f"""
         {init_prompt}
 

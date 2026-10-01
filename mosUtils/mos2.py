@@ -235,25 +235,7 @@ class ZeitWorld_Agent:
 
         return new_state
 
-# -------------      
-
-    def xshow(self, world_state, n=-1):
-        """
-        Display a WorldState at different levels of detail.
-
-        n = -2       : vector values only
-        n = -1       : vector names and values (default)
-        0 <= n < N   : complete details of vector n
-        n >= N       : complete details of all vectors
-        """
-
-       
-        # ---------------------------------------------------------
-        # Less than -2 : invalid
-        # ---------------------------------------------------------
-        print(f"Invalid show parameter: {n}")
-
-# -------------      
+# -------------            
 
     def update(self, world_list, event, update_prompt):
         """
@@ -315,9 +297,11 @@ class ZeitWorld_Agent:
 class Event:
     actor: str
     action: str
+    rationale: str = ""
     event_id: str = ""
 
     def show(self):
-        print(f"Event  : {self.event_id}")
-        print(f"Actor  : {self.actor}")
-        print(f"Action : {self.action}")
+        print(f"Event     : {self.event_id}")
+        print(f"Actor     : {self.actor}")
+        print(f"Action    : {self.action}")
+        print(f"Rationale : {self.rationale}")

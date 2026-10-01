@@ -47,7 +47,7 @@ class WorldState:
             variables=variables
         )
 # -------------------        
-    def show(self, world_state, n=-1):
+    def show(self, n=-1):
         """
         Display a WorldState at different levels of detail.
 
@@ -57,7 +57,7 @@ class WorldState:
         n >= N       : complete details of all vectors
         """
 
-        variables = world_state.variables
+        variables = self.variables
         N = len(variables)
 
         # ---------------------------------------------------------
@@ -73,7 +73,7 @@ class WorldState:
         # ---------------------------------------------------------
         if n == -1:
 
-            print(f"\nWorld State : {world_state.state_id}")
+            print(f"\nWorld State : {self.state_id}")
             print("-" * 55)
 
             for i, v in enumerate(variables):
@@ -110,7 +110,7 @@ class WorldState:
         # ---------------------------------------------------------
         if 0 <= n < N:
 
-            print(f"\nWorld State : {world_state.state_id}")
+            print(f"\nWorld State : {self.state_id}")
             show_variable(n)
             return
 
@@ -120,7 +120,7 @@ class WorldState:
         # ---------------------------------------------------------
         if n >= N:
 
-            print(f"\nWorld State : {world_state.state_id}")
+            print(f"\nWorld State : {self.state_id}")
             print("=" * 70)
 
             for i in range(N):

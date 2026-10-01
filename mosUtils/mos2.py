@@ -131,9 +131,7 @@ class ZeitWorld_Agent:
         )
 
         data = json.loads(response)
-
         new_state = WorldState.from_dict(data)
-
         self.initialised = True
 
         return new_state

@@ -227,18 +227,66 @@ class ZeitWorld_Agent:
 
 # -------------      
 
-    def update(self, current_state, action):
+    def update(self, current_state, event, update_prompt):
         """
-        Generate the next WorldState from the current state
-        and an executed action.
+        Generate the next WorldState from the current WorldState
+        and one executed Event.
 
         No external real-world information is available here.
         """
 
         if not self.initialised:
-            raise RuntimeError("ZeitWorld must be initialised before update.")
+            raise RuntimeError(
+                "ZeitWorld must be initialised before update."
+            )
 
-        # LLM processing will go here
+        # Determine next state ID
+        current_number = int(current_state.state_id[1:])
+        next_state_id = f"W{current_number + 1}"
 
-        return current_state
+        # Build complete runtime input
+        full_input = f"""
+        {update_prompt}
+
+        CURRENT WORLDSTATE
+        ==================
+        {current_state.to_json()}
+
+
+        EXECUTED EVENT
+        ==============
+        Event ID : {event.event_id}
+        Actor    : {event.actor}
+        Action   : {event.action}
+        """
+
+        # Ask ZeitWorld to calculate the new state
+        response = callLLM(
+            self.client,
+            self.role,
+            full_input,
+            self.model,
+            _effort="medium"
+        )
+
+        # Convert returned JSON into WorldState
+        data = json.loads(response)
+
+        new_state = WorldState.from_dict(data)
+
+        # State numbering is controlled by Python, not the LLM
+        new_state.state_id = next_state_id
+
+        return new_state
 # =============================================================================
+
+@dataclass
+class Event:
+    actor: str
+    action: str
+    event_id: str = ""
+
+    def show(self):
+        print(f"Event  : {self.event_id}")
+        print(f"Actor  : {self.actor}")
+        print(f"Action : {self.action}")

@@ -1,6 +1,9 @@
 # =============================================================================
-# CENTAUR : MOS — Middle East Oil Security
+# MOS — Middle East Oil Security
+# WorldFacts — Real-World Evidence Collection and Preparation
+#
 # Prithwis Mukerjee | 2026
+# https://www.linkedin.com/in/prithwis/
 # =============================================================================
 
 

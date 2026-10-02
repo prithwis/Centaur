@@ -1,6 +1,9 @@
 # =============================================================================
-# CENTAUR : MOS — Middle East Oil Security
+# MOS — Middle East Oil Security
+# Core Utilities and LLM Services
+#
 # Prithwis Mukerjee | 2026
+# https://www.linkedin.com/in/prithwis/
 # =============================================================================
 
 def authenticateOpenAI():

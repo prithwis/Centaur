@@ -1,10 +1,10 @@
 # =============================================================================
-# CENTAUR : MOS — Middle East Oil Security
-# Prithwis Mukerjee | 2026
+# MOS — Middle East Oil Security
+# ZeitWorld — WorldState Evolution Agent
 #
-# Simulation Module
+# Prithwis Mukerjee | 2026
+# https://www.linkedin.com/in/prithwis/
 # =============================================================================
-
 from dataclasses import dataclass, field
 import json
 from mos import *
@@ -306,4 +306,5 @@ class Event:
         print(f"Actor     : {self.actor}")
         print(f"Action    : {self.action}")
         print(f"Rationale : {self.rationale}")
+        print(f"selection_weight : {self.selection_weight}")
         

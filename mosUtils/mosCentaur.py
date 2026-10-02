@@ -1,7 +1,10 @@
-# ============================================================
-# mosCentaur.py
-# Centaur Adjudication Agent
-# ============================================================
+# =============================================================================
+# MOS — Middle East Oil Security
+# Centaur — Strategic Adjudication Agent
+#
+# Prithwis Mukerjee | 2026
+# https://www.linkedin.com/in/prithwis/
+# =============================================================================
 
 import json
 
@@ -268,3 +271,18 @@ Example:
 
 
         return weights
+# ============================================================
+import random
+
+def Shakuni(candidates, weights):
+
+    selected_index = random.choices(
+        range(len(candidates)),
+        weights=weights,
+        k=1
+    )[0]
+
+    reaction = candidates[selected_index]
+    reaction.selection_weight = weights[selected_index]
+
+    return reaction

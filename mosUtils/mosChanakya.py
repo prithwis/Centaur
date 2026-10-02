@@ -1,7 +1,10 @@
-# ============================================================
-# mos3.py
-# Chanakya Strategic Agent
-# ============================================================
+# =============================================================================
+# MOS — Middle East Oil Security
+# Chanakya — Strategic Option Generation Agent
+#
+# Prithwis Mukerjee | 2026
+# https://www.linkedin.com/in/prithwis/
+# =============================================================================
 
 import json
 

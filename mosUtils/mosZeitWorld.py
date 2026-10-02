@@ -299,9 +299,11 @@ class Event:
     action: str
     rationale: str = ""
     event_id: str = ""
+    selection_weight: float | None = None
 
     def show(self):
         print(f"Event     : {self.event_id}")
         print(f"Actor     : {self.actor}")
         print(f"Action    : {self.action}")
         print(f"Rationale : {self.rationale}")
+        

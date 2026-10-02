@@ -143,7 +143,7 @@ Rationale : {event.rationale}
     # Generate candidate Reaction Events
     # --------------------------------------------------------
 
-    def propose(self, trigger, world, client, model, effort="medium"):
+    def propose(self, client, model, trigger, world,  effort="medium"):
         """
         Generate candidate Reaction Events.
 
@@ -169,6 +169,7 @@ Rationale : {event.rationale}
             - are not appended to E
         """
 
+        print(f"Chanakya working ---------- {self.agent_id}")
 
         # ----------------------------------------------------
         # Prepare dynamic simulation context

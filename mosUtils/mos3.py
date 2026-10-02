@@ -326,3 +326,20 @@ Each element of the list must have this structure:
         # ----------------------------------------------------
 
         return candidates
+
+# ============================================================
+ 
+def getActiveChanakya(last_event, chanakya_registry):
+
+    if last_event.actor == "Iran":
+        responding_actor = "US"
+
+    elif last_event.actor == "US":
+        responding_actor = "Iran"
+
+    else:
+        raise ValueError(
+            f"No response rule defined for actor: {last_event.actor}"
+        )
+
+    return chanakya_registry[responding_actor]

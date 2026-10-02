@@ -11,22 +11,40 @@ from mos2 import Event
 
 class Chanakya_Agent:
     """
-    Strategic option generator for a geopolitical actor.
+    Strategic option-generation agent for MOS.
 
-    Each instance has:
-        - agent_id      : identity of this Chanakya
-        - actor         : geopolitical actor represented
-        - generic_role  : common Chanakya instructions
-        - actor_role    : actor-specific strategic role
+    Each Chanakya instance is configured by three role strings:
 
-    Given:
-        - Trigger Event
-        - Current WorldState
+        generic_role
+            Defines what Chanakya is and the general rules
+            governing its strategic reasoning.
 
-    Chanakya generates candidate Reaction Events.
+        specific_role
+            Defines the geopolitical actor represented by
+            this Chanakya: interests, objectives, constraints,
+            vulnerabilities, capabilities, red lines, etc.
+
+        strategy
+            Defines the strategy for generating candidate
+            reactions: number of candidates, their orientation,
+            degree of contrast, or any other option-generation
+            rule.
+
+    At each Turn, propose() receives:
+
+        trigger
+            The Event to which the actor is responding.
+
+        world
+            The current WorldState resulting from that Trigger.
+
+    Chanakya returns a list of candidate Event objects.
+
+    Candidate Events are possibilities only.
 
     Chanakya does NOT:
-        - select among candidates
+        - choose among candidates
+        - rank candidates
         - assign probabilities
         - assign event IDs
         - append candidates to E
@@ -43,17 +61,20 @@ class Chanakya_Agent:
         agent_id,
         actor,
         generic_role,
-        actor_role
+        specific_role,
+        strategy
     ):
 
         self.agent_id = agent_id
         self.actor = actor
+
         self.generic_role = generic_role
-        self.actor_role = actor_role
+        self.specific_role = specific_role
+        self.strategy = strategy
 
 
     # --------------------------------------------------------
-    # Display agent identity
+    # Display Chanakya identity
     # --------------------------------------------------------
 
     def show(self):
@@ -82,8 +103,8 @@ Rationale : {event.rationale}
 
     def _world_to_text(self, world):
         """
-        Convert current WorldState into compact text
-        for strategic reasoning.
+        Convert the current WorldState into compact text
+        suitable for strategic reasoning.
 
         Chanakya receives:
             - variable name
@@ -91,7 +112,7 @@ Rationale : {event.rationale}
             - status
             - surviving conditions
 
-        ZeitWorld transition rationale is deliberately
+        ZeitWorld's transition rationale is deliberately
         excluded.
         """
 
@@ -129,59 +150,76 @@ Rationale : {event.rationale}
         Parameters
         ----------
         trigger : Event
-            Event to which this actor is responding.
+            Event to which this Chanakya is responding.
 
         world : WorldState
-            WorldState resulting from the Trigger Event.
+            Current WorldState resulting from the Trigger.
 
         Returns
         -------
         list[Event]
             Candidate Reaction Events.
 
-        Candidate Events have no event_id and are not
-        appended to E.
+        The number and nature of candidates are determined
+        entirely by self.strategy.
+
+        Candidate Events:
+            - have actor, action and rationale
+            - have no event_id
+            - are not appended to E
         """
+
+
+        # ----------------------------------------------------
+        # Prepare dynamic simulation context
+        # ----------------------------------------------------
 
         trigger_text = self._event_to_text(trigger)
         world_text = self._world_to_text(world)
 
 
         # ----------------------------------------------------
-        # System prompt
+        # System Prompt
+        #
+        # Generic Role  : how Chanakya reasons
+        # Specific Role : actor-specific strategic perspective
         # ----------------------------------------------------
 
         system_prompt = f"""
+============================================================
+GENERIC CHANAKYA ROLE
+============================================================
+
 {self.generic_role}
 
+
 ============================================================
-ACTOR-SPECIFIC ROLE
+SPECIFIC ACTOR ROLE
 ============================================================
 
 CHANAKYA AGENT : {self.agent_id}
 ACTOR          : {self.actor}
 
-{self.actor_role}
+{self.specific_role}
 """.strip()
 
 
         # ----------------------------------------------------
-        # User prompt
+        # User Prompt
         #
-        # Exactly TWO candidates is a current prompt rule,
-        # not a structural restriction of Chanakya_Agent.
+        # Strategy determines HOW candidate options are
+        # generated.
+        #
+        # Trigger + WorldState provide the current situation.
         # ----------------------------------------------------
 
         user_prompt = f"""
-You are generating strategic reaction options for:
-
-ACTOR: {self.actor}
-
 ============================================================
 TRIGGER EVENT
 ============================================================
 
 {trigger_text}
+
 
 ============================================================
 CURRENT WORLDSTATE
@@ -189,17 +227,25 @@ CURRENT WORLDSTATE
 
 {world_text}
 
+
+============================================================
+STRATEGY
+============================================================
+
+{self.strategy}
+
+
 ============================================================
 TASK
 ============================================================
 
-Generate exactly TWO distinct and contrasting strategic
-reactions available to {self.actor} in response to the
-Trigger Event and given the Current WorldState.
+Generate candidate strategic reactions available to
+{self.actor} in response to the Trigger Event and given
+the Current WorldState.
 
-The alternatives must represent meaningfully different
-strategic choices rather than minor variations of the
-same action.
+Follow the STRATEGY instructions above when determining
+the number, nature and strategic orientation of the
+candidate reactions.
 
 For each candidate provide:
 
@@ -209,29 +255,30 @@ For each candidate provide:
 The rationale must explain why that action could make
 strategic sense for {self.actor} in the current situation.
 
-Do NOT choose between the candidates.
+Do NOT choose among the candidates.
 Do NOT rank the candidates.
 Do NOT assign probabilities.
 Do NOT update the WorldState.
 Do NOT predict numerical changes to WorldState variables.
 
-Return ONLY valid JSON as a list in exactly this structure:
 
-[
-    {{
-        "action": "...",
-        "rationale": "..."
-    }},
-    {{
-        "action": "...",
-        "rationale": "..."
-    }}
-]
+============================================================
+OUTPUT FORMAT
+============================================================
+
+Return ONLY valid JSON as a list.
+
+Each element of the list must have this structure:
+
+{{
+    "action": "...",
+    "rationale": "..."
+}}
 """.strip()
 
 
         # ----------------------------------------------------
-        # LLM call
+        # Call LLM
         # ----------------------------------------------------
 
         response = callLLM(
@@ -241,7 +288,7 @@ Return ONLY valid JSON as a list in exactly this structure:
 
 
         # ----------------------------------------------------
-        # Parse response
+        # Parse LLM response
         # ----------------------------------------------------
 
         if isinstance(response, str):
@@ -251,7 +298,7 @@ Return ONLY valid JSON as a list in exactly this structure:
 
 
         # ----------------------------------------------------
-        # Create candidate Event objects
+        # Convert output into candidate Event objects
         # ----------------------------------------------------
 
         candidates = []
@@ -268,8 +315,10 @@ Return ONLY valid JSON as a list in exactly this structure:
 
 
         # ----------------------------------------------------
-        # Candidate Events are returned only.
-        # They are NOT appended to E.
+        # Return candidate Events only.
+        #
+        # No event_id.
+        # Nothing appended to E.
         # ----------------------------------------------------
 
         return candidates

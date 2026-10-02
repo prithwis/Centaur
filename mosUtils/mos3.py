@@ -143,7 +143,7 @@ Rationale : {event.rationale}
     # Generate candidate Reaction Events
     # --------------------------------------------------------
 
-    def propose(self, trigger, world):
+    def propose(self, trigger, world, client, model, effort="medium"):
         """
         Generate candidate Reaction Events.
 
@@ -282,8 +282,11 @@ Each element of the list must have this structure:
         # ----------------------------------------------------
 
         response = callLLM(
+            client,
             system_prompt,
-            user_prompt
+            user_prompt,
+            model,
+            effort
         )
 
 

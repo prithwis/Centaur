@@ -432,7 +432,11 @@ def createNarrativeDocx(
         f"of actual events. The simulation begins with the hypothetical "
         f"trigger: {trigger.action} It then evolves through {steps} "
         f"simulation-generated steps involving {actorText}, with each "
-        f"action changing the simulated world and influencing the next response."
+        f"action changing the simulated world and influencing the next response. "
+        f"Numerical values shown in the report are simulation indices, not "
+        f"real-world measurements: each variable is normalised to 100 at the "
+        f"start of the simulation, and subsequent values indicate movement "
+        f"relative to that initial baseline."
     )
 
     run.italic = True

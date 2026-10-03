@@ -256,11 +256,173 @@ def _addPageNumber(paragraph):
 
 
 # ============================================================
+# Helper: Add WorldState Evolution Table
+# ============================================================
+
+def _addWorldStateTable(doc, W, E):
+    """
+    Add a compact table showing the evolution of WorldVariable
+    indices across the Scenario.
+
+    Rows    : WorldStates W0, W1, W2, ...
+    Columns : WorldVariables
+    Event   : Event that produced each WorldState
+              (W0 is the Initial State)
+    """
+
+    from docx.shared import Pt
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT
+
+    if not W:
+        return
+
+    # --------------------------------------------------------
+    # Table heading
+    # --------------------------------------------------------
+
+    p = doc.add_paragraph()
+
+    run = p.add_run("WorldState Evolution")
+    run.bold = True
+    run.font.size = Pt(13)
+
+    p = doc.add_paragraph()
+
+    run = p.add_run(
+        "All values are simulation indices normalised to 100 "
+        "at the initial WorldState (W0)."
+    )
+
+    run.italic = True
+    run.font.size = Pt(9)
+
+
+    # --------------------------------------------------------
+    # Column headings
+    # --------------------------------------------------------
+
+    # Short headings keep the table readable in portrait mode.
+    variableHeaders = [
+        "Oil",
+        "Hormuz",
+        "India",
+        "Sanctions",
+        "Allies",
+        "Iran",
+        "US-Iran",
+        "Conflict"
+    ]
+
+    headers = [
+        "State",
+        "Event"
+    ] + variableHeaders
+
+    table = doc.add_table(
+        rows=1,
+        cols=len(headers)
+    )
+
+    table.style = "Table Grid"
+
+
+    # --------------------------------------------------------
+    # Header row
+    # --------------------------------------------------------
+
+    headerCells = table.rows[0].cells
+
+    for i, heading in enumerate(headers):
+
+        headerCells[i].text = heading
+        headerCells[i].vertical_alignment = (
+            WD_CELL_VERTICAL_ALIGNMENT.CENTER
+        )
+
+        p = headerCells[i].paragraphs[0]
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+        for run in p.runs:
+            run.bold = True
+            run.font.size = Pt(8)
+
+
+    # --------------------------------------------------------
+    # WorldState rows
+    # --------------------------------------------------------
+
+    for stateNo, world in enumerate(W):
+
+        cells = table.add_row().cells
+
+        # WorldState
+        cells[0].text = world.state_id
+
+        # Event producing this WorldState
+        if stateNo == 0:
+            cells[1].text = "Initial"
+        else:
+            cells[1].text = E[stateNo - 1].event_id
+
+        # Variable indices
+        for j, variable in enumerate(world.variables):
+
+            cells[j + 2].text = str(variable.index)
+
+
+        # Format row
+        for cell in cells:
+
+            cell.vertical_alignment = (
+                WD_CELL_VERTICAL_ALIGNMENT.CENTER
+            )
+
+            p = cell.paragraphs[0]
+            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+            for run in p.runs:
+                run.font.size = Pt(8)
+
+
+    # --------------------------------------------------------
+    # Event Key
+    # --------------------------------------------------------
+
+    doc.add_paragraph()
+
+    p = doc.add_paragraph()
+
+    run = p.add_run("Event Key")
+    run.bold = True
+    run.font.size = Pt(10)
+
+    for event in E:
+
+        p = doc.add_paragraph()
+
+        p.paragraph_format.space_after = Pt(2)
+
+        run = p.add_run(
+            f"{event.event_id} — {event.actor}: "
+        )
+
+        run.bold = True
+        run.font.size = Pt(9)
+
+        run = p.add_run(event.action)
+
+        run.font.size = Pt(9)
+    
+
+
+# ============================================================
 # NARRATIVE DOCX CREATOR
 # ============================================================
 
 def createNarrativeDocx(
     narrativeText,
+    W,
     E,
     scenarioID="Scenario",
     title="MOS Scenario Report",
@@ -407,7 +569,7 @@ def createNarrativeDocx(
 
     doc.add_paragraph()
 
-        # --------------------------------------------------------
+    # --------------------------------------------------------
     # Simulation Note
     # --------------------------------------------------------
 
@@ -542,6 +704,13 @@ def createNarrativeDocx(
                 p,
                 line
             )
+
+
+    # --------------------------------------------------------
+    # WorldState Evolution
+    # --------------------------------------------------------
+
+    _addWorldStateTable(doc, W, E)
 
 
     # --------------------------------------------------------

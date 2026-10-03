@@ -7,12 +7,20 @@
 # Converts a completed simulation Scenario (W + E) into
 # human-readable and machine-oriented reports.
 #
+# All LLM calls are routed through callLLM() in mos.py.
+#
 # Prithwis Mukerjee, 2026
 # LinkedIn: https://www.linkedin.com/in/prithwis/
 # ============================================================
 
+from mos import *
+
 
 class PressReporter_Agent:
+
+    # ========================================================
+    # Initialise PressReporter
+    # ========================================================
 
     def __init__(
         self,
@@ -49,6 +57,7 @@ class PressReporter_Agent:
 
             if variable.conditions:
                 text.append("Conditions:")
+
                 for condition in variable.conditions:
                     text.append(f"- {condition}")
 
@@ -84,6 +93,8 @@ class PressReporter_Agent:
 
     def _scenarioText(self, W, E):
 
+        # A completed Scenario must have one more WorldState
+        # than Events.
         if len(W) != len(E) + 1:
             raise ValueError(
                 "Incomplete Scenario: "
@@ -107,7 +118,7 @@ class PressReporter_Agent:
         text.append(self._worldStateText(W[0]))
 
         # ----------------------------------------------------
-        # Event / WorldState sequence
+        # Event / resulting WorldState sequence
         # ----------------------------------------------------
 
         for i, event in enumerate(E):
@@ -123,12 +134,15 @@ class PressReporter_Agent:
 
 
     # ========================================================
-    # Generic LLM Call
+    # Build Reporting Role
+    #
+    # Combines the generic PressReporter role with the
+    # report-specific Narrative or Structured prompt.
     # ========================================================
 
-    def _callLLM(self, scenario, prompt):
+    def _buildRole(self, prompt):
 
-        instructions = f"""
+        return f"""
 {self.generic_role}
 
 {prompt}
@@ -139,14 +153,6 @@ Do not introduce external facts, events or assumptions.
 Do not alter Event IDs, WorldState IDs, numerical indices
 or selection weights.
 """
-
-        response = self.client.responses.create(
-            model=self.model,
-            instructions=instructions,
-            input=scenario
-        )
-
-        return response.output_text
 
 
     # ========================================================
@@ -159,15 +165,18 @@ or selection weights.
     def narrative(self, W, E, prompt):
 
         scenario = self._scenarioText(W, E)
+        role = self._buildRole(prompt)
 
         print(
             f"PressReporter working ---------- "
             f"{self.agent_id} | Narrative"
         )
 
-        return self._callLLM(
+        return callLLM(
+            self.client,
+            role,
             scenario,
-            prompt
+            self.model
         )
 
 
@@ -181,15 +190,18 @@ or selection weights.
     def structured(self, W, E, prompt):
 
         scenario = self._scenarioText(W, E)
+        role = self._buildRole(prompt)
 
         print(
             f"PressReporter working ---------- "
             f"{self.agent_id} | Structured"
         )
 
-        return self._callLLM(
+        return callLLM(
+            self.client,
+            role,
             scenario,
-            prompt
+            self.model
         )
 
 

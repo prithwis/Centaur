@@ -206,3 +206,345 @@ or selection weights.
 
 
 # ============================================================
+
+Microsoft DOCX generator 
+
+# ============================================================
+# ============================================================
+# DOCX HELPER FUNCTIONS
+# ============================================================
+
+def _addFormattedText(paragraph, text):
+    """Convert simple Markdown bold/italic into Word formatting."""
+
+    import re
+
+    pattern = r'(\*\*.*?\*\*|\*.*?\*)'
+    parts = re.split(pattern, text)
+
+    for part in parts:
+
+        if not part:
+            continue
+
+        if part.startswith("**") and part.endswith("**"):
+            run = paragraph.add_run(part[2:-2])
+            run.bold = True
+
+        elif part.startswith("*") and part.endswith("*"):
+            run = paragraph.add_run(part[1:-1])
+            run.italic = True
+
+        else:
+            paragraph.add_run(part)
+
+
+def _addPageNumber(paragraph):
+    """Insert an automatic Word PAGE field."""
+
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
+
+    run = paragraph.add_run()
+
+    begin = OxmlElement("w:fldChar")
+    begin.set(qn("w:fldCharType"), "begin")
+
+    instr = OxmlElement("w:instrText")
+    instr.set(qn("xml:space"), "preserve")
+    instr.text = "PAGE"
+
+    end = OxmlElement("w:fldChar")
+    end.set(qn("w:fldCharType"), "end")
+
+    run._r.append(begin)
+    run._r.append(instr)
+    run._r.append(end)
+
+
+# ============================================================
+# NARRATIVE DOCX CREATOR
+# ============================================================
+
+def createNarrativeDocx(
+    narrativeText,
+    scenarioID="Scenario",
+    title="MOS Scenario Report",
+    outputDir="/content"
+):
+
+    import os
+    import re
+
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+
+    from docx import Document
+    from docx.shared import Inches, Pt
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+
+
+    # --------------------------------------------------------
+    # Filename
+    # --------------------------------------------------------
+
+    now = datetime.now(ZoneInfo("Asia/Kolkata"))
+
+    filename = (
+        f"MOS_{scenarioID}_{now.strftime('%y%m%d_%H%M%S')}.docx"
+    )
+
+    filepath = os.path.join(outputDir, filename)
+
+
+    # --------------------------------------------------------
+    # Create document
+    # --------------------------------------------------------
+
+    doc = Document()
+
+    section = doc.sections[0]
+
+    section.top_margin = Inches(0.75)
+    section.bottom_margin = Inches(0.75)
+    section.left_margin = Inches(0.85)
+    section.right_margin = Inches(0.85)
+
+
+    # --------------------------------------------------------
+    # Normal text
+    # --------------------------------------------------------
+
+    normal = doc.styles["Normal"]
+    normal.font.name = "Aptos"
+    normal.font.size = Pt(10.5)
+
+    normal.paragraph_format.space_after = Pt(6)
+    normal.paragraph_format.line_spacing = 1.08
+
+
+    # --------------------------------------------------------
+    # Heading styles
+    # --------------------------------------------------------
+
+    headingStyles = [
+        ("Title", 20),
+        ("Heading 1", 16),
+        ("Heading 2", 13),
+        ("Heading 3", 11)
+    ]
+
+    for styleName, fontSize in headingStyles:
+
+        style = doc.styles[styleName]
+
+        style.font.name = "Aptos Display"
+        style.font.size = Pt(fontSize)
+        style.font.bold = True
+
+
+    # --------------------------------------------------------
+    # Header
+    # --------------------------------------------------------
+
+    header = section.header
+
+    p = header.paragraphs[0]
+    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+
+    run = p.add_run(
+        "MOS   |   MIDDLE EAST OIL SECURITY SIMULATION"
+    )
+
+    run.font.name = "Aptos"
+    run.font.size = Pt(9)
+    run.bold = True
+
+
+    # --------------------------------------------------------
+    # Footer
+    # --------------------------------------------------------
+
+    footer = section.footer
+
+    p = footer.paragraphs[0]
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+    generated = now.strftime(
+        "%d %b %Y  %H:%M:%S"
+    )
+
+    run = p.add_run(
+        f"{scenarioID}   |   "
+        f"Generated: {generated}   |   "
+        f"Page "
+    )
+
+    run.font.name = "Aptos"
+    run.font.size = Pt(8)
+
+    _addPageNumber(p)
+
+
+    # --------------------------------------------------------
+    # Document title
+    # --------------------------------------------------------
+
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+
+    run = p.add_run(title)
+
+    run.bold = True
+    run.font.name = "Aptos Display"
+    run.font.size = Pt(18)
+
+    p = doc.add_paragraph()
+
+    run = p.add_run(
+        f"Scenario: {scenarioID}"
+    )
+
+    run.font.name = "Aptos"
+    run.font.size = Pt(10)
+
+    doc.add_paragraph()
+
+
+    # --------------------------------------------------------
+    # Convert Narrative Markdown to Word
+    # --------------------------------------------------------
+
+    for rawLine in narrativeText.splitlines():
+
+        line = rawLine.strip()
+
+        if not line:
+            continue
+
+        if line.startswith("# "):
+
+            doc.add_heading(
+                line[2:].strip(),
+                level=1
+            )
+
+        elif line.startswith("## "):
+
+            doc.add_heading(
+                line[3:].strip(),
+                level=2
+            )
+
+        elif line.startswith("### "):
+
+            doc.add_heading(
+                line[4:].strip(),
+                level=3
+            )
+
+        elif line.startswith(">"):
+
+            p = doc.add_paragraph()
+
+            p.paragraph_format.left_indent = Inches(0.3)
+
+            run = p.add_run(
+                line[1:].strip()
+            )
+
+            run.italic = True
+
+        elif re.match(r"^[-*]\s+", line):
+
+            text = re.sub(
+                r"^[-*]\s+",
+                "",
+                line
+            )
+
+            p = doc.add_paragraph(
+                style="List Bullet"
+            )
+
+            _addFormattedText(p, text)
+
+        elif re.match(r"^\d+\.\s+", line):
+
+            text = re.sub(
+                r"^\d+\.\s+",
+                "",
+                line
+            )
+
+            p = doc.add_paragraph(
+                style="List Number"
+            )
+
+            _addFormattedText(p, text)
+
+        elif re.match(r"^-{3,}$", line):
+
+            continue
+
+        else:
+
+            p = doc.add_paragraph()
+
+            _addFormattedText(
+                p,
+                line
+            )
+
+
+    # --------------------------------------------------------
+    # End note
+    # --------------------------------------------------------
+
+    doc.add_paragraph()
+
+    p = doc.add_paragraph()
+    p.paragraph_format.space_before = Pt(12)
+
+    run = p.add_run(
+        "This report describes one simulated scenario generated "
+        "by the MOS Middle East Oil Security simulation. "
+        "It represents a possible simulated history, not a prediction "
+        "or statement of real-world events."
+    )
+
+    run.italic = True
+    run.font.size = Pt(8)
+
+
+    # --------------------------------------------------------
+    # Document metadata
+    # --------------------------------------------------------
+
+    doc.core_properties.title = title
+
+    doc.core_properties.subject = (
+        "MOS Middle East Oil Security Simulation"
+    )
+
+    doc.core_properties.author = (
+        "Prithwis Mukerjee"
+    )
+
+    doc.core_properties.keywords = (
+        f"MOS, Centaur, ZeitWorld, Chanakya, "
+        f"Scenario Simulation, {scenarioID}"
+    )
+
+
+    # --------------------------------------------------------
+    # Save
+    # --------------------------------------------------------
+
+    doc.save(filepath)
+
+    print(
+        f"Word report created: {filepath}"
+    )
+
+    return filepath

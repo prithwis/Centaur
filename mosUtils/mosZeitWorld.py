@@ -1,10 +1,11 @@
-# =============================================================================
-# MOS — Middle East Oil Security
-# ZeitWorld — WorldState Evolution Agent
+# ==================================================
+#  C E N T A U R  ::  MOS
+#  Middle East Oil Security Simulator
 #
-# Prithwis Mukerjee | 2026
-# https://www.linkedin.com/in/prithwis/
-# =============================================================================
+#  Prithwis Mukerjee | 2026
+#  Action -> Consequence -> Reaction -> ...
+# ==================================================
+
 from dataclasses import dataclass, field
 import json
 from mos import *

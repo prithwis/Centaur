@@ -1,10 +1,10 @@
-# =============================================================================
-# MOS — Middle East Oil Security
-# Core Utilities and LLM Services
+# ==================================================
+#  C E N T A U R  ::  MOS
+#  Middle East Oil Security Simulator
 #
-# Prithwis Mukerjee | 2026
-# https://www.linkedin.com/in/prithwis/
-# =============================================================================
+#  Prithwis Mukerjee | 2026
+#  Action -> Consequence -> Reaction -> ...
+# ==================================================
 
 def authenticateOpenAI():
 

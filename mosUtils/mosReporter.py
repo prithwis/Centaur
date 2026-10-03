@@ -1,17 +1,10 @@
-# ============================================================
-# mosReporter.py
+# ==================================================
+#  C E N T A U R  ::  MOS
+#  Middle East Oil Security Simulator
 #
-# MOS — Middle East Oil Security Simulation
-# PressReporter Agent
-#
-# Converts a completed simulation Scenario (W + E) into
-# human-readable and machine-oriented reports.
-#
-# All LLM calls are routed through callLLM() in mos.py.
-#
-# Prithwis Mukerjee, 2026
-# LinkedIn: https://www.linkedin.com/in/prithwis/
-# ============================================================
+#  Prithwis Mukerjee | 2026
+#  Action -> Consequence -> Reaction -> ...
+# ==================================================
 
 from mos import *
 

@@ -268,6 +268,7 @@ def _addPageNumber(paragraph):
 
 def createNarrativeDocx(
     narrativeText,
+    E,
     scenarioID="Scenario",
     title="MOS Scenario Report",
     outputDir="/content"
@@ -317,10 +318,10 @@ def createNarrativeDocx(
 
     normal = doc.styles["Normal"]
     normal.font.name = "Aptos"
-    normal.font.size = Pt(10.5)
+    normal.font.size = Pt(11.5)
 
-    normal.paragraph_format.space_after = Pt(6)
-    normal.paragraph_format.line_spacing = 1.08
+    normal.paragraph_format.space_after = Pt(7)
+    normal.paragraph_format.line_spacing = 1.10
 
 
     # --------------------------------------------------------
@@ -328,10 +329,10 @@ def createNarrativeDocx(
     # --------------------------------------------------------
 
     headingStyles = [
-        ("Title", 20),
-        ("Heading 1", 16),
-        ("Heading 2", 13),
-        ("Heading 3", 11)
+    ("Title", 21),
+    ("Heading 1", 17),
+    ("Heading 2", 14),
+    ("Heading 3", 12)
     ]
 
     for styleName, fontSize in headingStyles:
@@ -375,8 +376,9 @@ def createNarrativeDocx(
     )
 
     run = p.add_run(
-        f"{scenarioID}   |   "
-        f"Generated: {generated}   |   "
+        f"Generated on {generated}   |   "
+        f"Prithwis Mukerjee   |   "
+        f"linkedin.com/in/prithwis/   |   "
         f"Page "
     )
 
@@ -407,6 +409,35 @@ def createNarrativeDocx(
 
     run.font.name = "Aptos"
     run.font.size = Pt(10)
+
+    doc.add_paragraph()
+
+    # --------------------------------------------------------
+    # Simulation Note
+    # --------------------------------------------------------
+
+    trigger = E[0]
+    actors = list(dict.fromkeys(event.actor for event in E))
+
+    actorText = " and ".join(actors)
+
+    # E0 is the initial trigger; subsequent Events are
+    # simulation-generated responses.
+    steps = len(E) - 1
+
+    p = doc.add_paragraph()
+
+    run = p.add_run(
+        f"This is an LLM-based geopolitical simulation, not an account "
+        f"of actual events. The simulation begins with the hypothetical "
+        f"trigger: {trigger.action} It then evolves through {steps} "
+        f"simulation-generated steps involving {actorText}, with each "
+        f"action changing the simulated world and influencing the next response."
+    )
+
+    run.italic = True
+    run.font.name = "Aptos"
+    run.font.size = Pt(10.5)
 
     doc.add_paragraph()
 

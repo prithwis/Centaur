@@ -381,7 +381,6 @@ def createNarrativeDocx(
     run = p.add_run(
         f"Generated on {generated}   |   "
         f"Prithwis Mukerjee   |   "
-        f"linkedin.com/in/prithwis/   |   "
         f"Page "
     )
 

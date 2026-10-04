@@ -147,7 +147,6 @@ Do not alter Event IDs, WorldState IDs, numerical indices
 or selection weights.
 """
 
-class HumanReporter_Agent(PressReporter_Agent):
 
     # ========================================================
     # Narrative Report
@@ -174,9 +173,6 @@ class HumanReporter_Agent(PressReporter_Agent):
         )
 
 
-class MachineReporter_Agent(PressReporter_Agent):
-
-    
     # ========================================================
     # Structured Report
     #

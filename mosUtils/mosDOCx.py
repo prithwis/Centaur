@@ -111,20 +111,20 @@ def _addWorldStateTable(doc, W, E):
     # --------------------------------------------------------
 
     variableHeaders = {
-        "Oil Price": "Oil",
-        "Hormuz Oil Flow": "Hormuz",
-        "Regional Diplomatic Engagement": "Diplomacy",
-        "Economic Pressure on Iran": "Econ Pressure",
-        "US/Regional Partner Cohesion": "US Partners",
-        "Iran Domestic Stability": "Iran Stability",
-        "US-Iran Tension": "US-Iran",
-        "Regional Armed Conflict": "Conflict"
+    "Oil Price": "Oil",
+    "Hormuz Oil Flow": "Hormuz",
+    "Regional Diplomatic Engagement": "Diplomacy",
+    "Economic Pressure on Iran": "Econ Pressure",
+    "US/Regional Partner Cohesion": "US Partners",
+    "Iran Domestic Stability": "Iran Stability",
+    "US-Iran Tension": "US-Iran",
+    "Regional Armed Conflict": "Conflict"
     }
 
     headers = ["State", "Event"] + [
-        variableHeaders.get(variable.name, variable.name)
+        variableHeaders[variable.name]
         for variable in W[0].variables
-]
+    ]
 
     table = doc.add_table(
         rows=1,

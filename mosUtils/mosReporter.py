@@ -156,13 +156,13 @@ class HumanReporter_Agent(PressReporter_Agent):
     # explaining Events, consequences and major turning points.
     # ========================================================
 
-    def narrative(self, W, E, prompt):
+    def GenerateReport(self, W, E, prompt):
 
         scenario = self._scenarioText(W, E)
         role = self._buildRole(prompt)
 
         print(
-            f"PressReporter working ---------- "
+            f"Reporter working ---------- "
             f"{self.agent_id} | Narrative"
         )
 
@@ -184,13 +184,13 @@ class MachineReporter_Agent(PressReporter_Agent):
     # for subsequent machine-based analysis.
     # ========================================================
 
-    def structured(self, W, E, prompt):
+    def GenerateReport(self, W, E, prompt):
 
         scenario = self._scenarioText(W, E)
         role = self._buildRole(prompt)
 
         print(
-            f"PressReporter working ---------- "
+            f"Reporter working ---------- "
             f"{self.agent_id} | Structured"
         )
 

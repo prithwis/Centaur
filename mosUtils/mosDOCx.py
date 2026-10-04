@@ -122,8 +122,8 @@ def _addWorldStateTable(doc, W, E):
     }
 
     headers = ["State", "Event"] + [
-        variableHeaders[variable.name]
-        for variable in W[0].variables
+    variableHeaders.get(variable.name, f"Var {i + 1}")
+    for i, variable in enumerate(W[0].variables)
     ]
 
     table = doc.add_table(

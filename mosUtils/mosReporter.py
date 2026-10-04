@@ -154,7 +154,7 @@ or selection weights.
 
         print(
             f"Reporter working ---------- "
-            f"{self.agent_id} | Narrative"
+            f"{self.agent_id} "
         )
 
         return callLLM(

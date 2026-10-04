@@ -9,7 +9,7 @@
 from mos import *
 
 
-class PressReporter_Agent:
+class Reporter_Agent:
 
     # ========================================================
     # Initialise PressReporter

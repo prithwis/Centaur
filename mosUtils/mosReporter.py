@@ -147,15 +147,6 @@ Do not alter Event IDs, WorldState IDs, numerical indices
 or selection weights.
 """
 
-class HumanReporter_Agent(PressReporter_Agent):
-
-    # ========================================================
-    # Narrative Report
-    #
-    # Produces a flowing human-readable account of the Scenario,
-    # explaining Events, consequences and major turning points.
-    # ========================================================
-
     def GenerateReport(self, W, E, prompt):
 
         scenario = self._scenarioText(W, E)
@@ -174,31 +165,5 @@ class HumanReporter_Agent(PressReporter_Agent):
         )
 
 
-class MachineReporter_Agent(PressReporter_Agent):
-
-    
-    # ========================================================
-    # Structured Report
-    #
-    # Produces a structured Markdown representation suitable
-    # for subsequent machine-based analysis.
-    # ========================================================
-
-    def GenerateReport(self, W, E, prompt):
-
-        scenario = self._scenarioText(W, E)
-        role = self._buildRole(prompt)
-
-        print(
-            f"Reporter working ---------- "
-            f"{self.agent_id} | Structured"
-        )
-
-        return callLLM(
-            self.client,
-            role,
-            scenario,
-            self.model
-        )
 
 

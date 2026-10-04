@@ -110,22 +110,21 @@ def _addWorldStateTable(doc, W, E):
     # Column headings
     # --------------------------------------------------------
 
-    # Short headings keep the table readable in portrait mode.
-    variableHeaders = [
-        "Oil",
-        "Hormuz",
-        "India",
-        "Sanctions",
-        "Allies",
-        "Iran",
-        "US-Iran",
-        "Conflict"
-    ]
+    variableHeaders = {
+        "Oil Price": "Oil",
+        "Hormuz Oil Flow": "Hormuz",
+        "Regional Diplomatic Engagement": "Diplomacy",
+        "Economic Pressure on Iran": "Econ Pressure",
+        "US/Regional Partner Cohesion": "US Partners",
+        "Iran Domestic Stability": "Iran Stability",
+        "US-Iran Tension": "US-Iran",
+        "Regional Armed Conflict": "Conflict"
+    }
 
-    headers = [
-        "State",
-        "Event"
-    ] + variableHeaders
+    headers = ["State", "Event"] + [
+        variableHeaders.get(variable.name, variable.name)
+        for variable in W[0].variables
+]
 
     table = doc.add_table(
         rows=1,

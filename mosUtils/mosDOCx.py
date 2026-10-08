@@ -233,6 +233,7 @@ def createNarrativeDocx(
     E,
     scenarioID="Scenario",
     title="MOS Scenario Report",
+    suffix="000000-000000"
     outputDir="/content"
 ):
 
@@ -256,9 +257,10 @@ def createNarrativeDocx(
 
     now = datetime.now(ZoneInfo("Asia/Kolkata"))
 
-    filename = (
-        f"MOS_{scenarioID}_{now.strftime('%y%m%d_%H%M%S')}.docx"
-    )
+    #filename = (f"MOS_{scenarioID}_{now.strftime('%y%m%d_%H%M%S')}.docx")
+    filename = (f"MOS_{scenarioID}_{suffix}.docx")
+    
+    
 
     filepath = os.path.join(outputDir, filename)
 

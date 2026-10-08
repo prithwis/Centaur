@@ -260,9 +260,8 @@ def createNarrativeDocx(
     #filename = (f"MOS_{scenarioID}_{now.strftime('%y%m%d_%H%M%S')}.docx")
     filename = (f"MOS_{scenarioID}_{suffix}.docx")
     
-    
-
     filepath = os.path.join(outputDir, filename)
+    print("A", --- filename, filepath)
 
 
     # --------------------------------------------------------
@@ -583,6 +582,8 @@ def createNarrativeDocx(
     # --------------------------------------------------------
     # Save
     # --------------------------------------------------------
+
+    print("B", --- filename, filepath)
 
     doc.save(filepath)
 

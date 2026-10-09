@@ -166,4 +166,23 @@ or selection weights.
 
 
 
+import json
+from dataclasses import asdict
 
+#--------------------------------------------------------------------
+#
+# Generate a structured report WITHOUT calling LLM
+#
+#--------------------------------------------------------------------
+def GenerateStructuredReport(W, E):
+    data = {
+        "Events": [asdict(e) for e in E],
+        "WorldStates": [json.loads(w.to_json()) for w in W]
+    }
+
+    return (
+        "# MOS Structured Scenario Report\n\n"
+        "```json\n"
+        + json.dumps(data, indent=2, ensure_ascii=False)
+        + "\n```\n"
+    )

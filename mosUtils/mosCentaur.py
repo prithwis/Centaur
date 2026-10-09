@@ -269,6 +269,14 @@ Example:
                 "Centaur returned no positive simulation weight."
             )
 
+        # ----------------------------------------------------
+        # Normalise simulation weights
+        # ----------------------------------------------------
+
+        total = sum(weights)
+        weights = [w / total for w in weights]
+
+
 
         return weights
 # ============================================================

@@ -48,8 +48,48 @@ def authenticateOpenAI():
 		
 # ------------------------------------------------------------------------------------------------------------------
 
-    
+
+
+import time
+
 def callLLM(client, _Role, _Input, _model, _effort="medium"):
+
+    start = time.perf_counter()
+
+    response = client.responses.create(
+        model=_model,
+        instructions=_Role,
+        input=_Input,
+        reasoning={"effort": _effort}
+    )
+
+    elapsed = time.perf_counter() - start
+
+    usage = response.usage
+    reasoning_tokens = getattr(usage.output_tokens_details, "reasoning_tokens", 0) or 0
+    cached_tokens = getattr(usage.input_tokens_details, "cached_tokens", 0) or 0
+
+    visible_tokens = usage.output_tokens - reasoning_tokens
+    throughput = usage.output_tokens / elapsed if elapsed > 0 else 0
+
+    print(
+        f"Model: {response.model} | "
+        f"Effort: {_effort} | "
+        f"Time: {elapsed:.1f}s | "
+        f"Input: {usage.input_tokens:,} | "
+        f"Cached: {cached_tokens:,} | "
+        f"Output: {usage.output_tokens:,} | "
+        f"Reasoning: {reasoning_tokens:,} | "
+        f"Visible: {visible_tokens:,} | "
+        f"Total: {usage.total_tokens:,} | "
+        f"Speed: {throughput:.1f} tok/s | "
+        f"Status: {response.status}"
+    )
+
+    return response.output_text
+
+    
+def zcallLLM(client, _Role, _Input, _model, _effort="medium"):
 
     response = client.responses.create(
         model=_model,

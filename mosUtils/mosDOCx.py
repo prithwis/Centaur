@@ -1,10 +1,10 @@
-# ==================================================
-#  C E N T A U R  ::  MOS
-#  Middle East Oil Security Simulator
-#
-#  Prithwis Mukerjee | 2026
-#  Action -> Consequence -> Reaction -> ...
-# ==================================================
+# =============================================================================
+# MOS — Monte Carlo++ (MC++)
+# An LLM-Based Geopolitical Simulation Framework
+# Part of the Centaur Architecture
+# Action -> Consequence -> Reaction -> ...
+# Designed and Developed by Prithwis Mukerjee | 2026
+# =============================================================================
 
 from mos import *
 

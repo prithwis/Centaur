@@ -1,10 +1,11 @@
-# ==================================================
-#  C E N T A U R  ::  MOS
-#  Middle East Oil Security Simulator
-#
-#  Prithwis Mukerjee | 2026
-#  Action -> Consequence -> Reaction -> ...
-# ==================================================
+# =============================================================================
+# MOS — Monte Carlo++ (MC++)
+# An LLM-Based Geopolitical Simulation Framework
+# Part of the Centaur Architecture
+# Action -> Consequence -> Reaction -> ...
+# Designed and Developed by Prithwis Mukerjee | 2026
+# =============================================================================
+
 
 def authenticateOpenAI():
 
@@ -89,28 +90,7 @@ def callLLM(client, _Role, _Input, _model, _effort="medium"):
     return response.output_text
 
     
-def zcallLLM(client, _Role, _Input, _model, _effort="medium"):
 
-    response = client.responses.create(
-        model=_model,
-        instructions=_Role,
-        input=_Input,
-        reasoning={"effort": _effort}
-    )
-
-    usage = response.usage
-    reasoning_tokens = getattr(usage.output_tokens_details,"reasoning_tokens",0)
-
-    print(
-        f"Model: {response.model} | "
-        f"Effort: {_effort} | "
-        f"Input: {usage.input_tokens:,} | "
-        f"Output: {usage.output_tokens:,} | "
-        f"Reasoning: {reasoning_tokens:,} | "
-        f"Total: {usage.total_tokens:,}"
-    )
-
-    return response.output_text
 
 # ------------------------------------------------------------------------------------------------------------------
 

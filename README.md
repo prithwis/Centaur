@@ -43,6 +43,19 @@ An experiment with **40 simulations for each of two alternative triggers** produ
 
 These are simulated outcomes, not real-world forecasts. They illustrate how different initial triggers can lead to markedly different distributions of alternative histories.
 
+### Two Histories, One Starting Point
+
+Starting from the identical Iranian closure of the Strait of Hormuz, two simulation runs produced sharply different histories.
+
+In one, military retaliation led to further escalation. In the other, diplomatic initiatives opened a path toward de-escalation, although the underlying crisis remained unresolved.
+
+These contrasting histories illustrate how **Monte Carlo++ explores alternative strategic trajectories.**
+
+- [History 07 — De-Escalation](Documentation/MOS_TR1ME3_261012_160059.pdf)
+- [History 08 — Escalation](Documentation/MOS_TR1ME3_261012_155848.pdf)
+
+**Same starting point. Different decisions. Different futures.**
+
 ## What It Is — and Is Not
 
 Monte Carlo++ is an experimental platform for exploring strategic possibilities, **not a prediction engine**.

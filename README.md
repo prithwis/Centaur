@@ -1,175 +1,60 @@
-# Centaur
+# Centaur — Monte Carlo++
 
-**Enter the Centaur.**
+**From AI-assisted decision-making to probabilistic simulation of alternative futures.**
 
-Centaur is a human–AI hybrid simulation framework designed to adjudicate complex strategic decisions. It was originally built for a geopolitical matrix strategy game, but it can be used to evaluate any structured decision scenario where the “state of the world” matters.
+## Enter the Centaur
 
-Centaur is not a chatbot.  
-It is a role-structured simulation engine.
+Centaur began as an LLM-based framework for adjudicating strategic decisions in geopolitical classroom games.
 
----
+It has since evolved into **Monte Carlo++ (MC++)**, a platform that combines traditional Monte Carlo sampling with LLM-based strategic reasoning.
 
-## What Problem Does This Solve?
+Traditional Monte Carlo explores uncertainty using predefined mathematical models and probability distributions.
 
-Most LLM applications collapse everything into one stream of text:
+**Monte Carlo++ explores strategic uncertainty where decisions depend on context, competing interests and an evolving world.**
 
-- Describe the world  
-- Propose an action  
-- Evaluate the action  
-- Anticipate the opponent  
+## How It Works
 
-Centaur separates these functions into distinct roles to make reasoning more disciplined and easier to inspect.
+Five components work together:
 
-It is a small experiment in structured AI-mediated cognition.
+- **ZeitWorld** — Maintains and updates the state of the world.
+- **Chanakya** — Generates strategic alternatives for competing actors.
+- **Centaur** — Evaluates alternatives and assigns probability weights.
+- **Shakuni** — Selects an action through stochastic sampling.
+- **Analyst** — Interprets patterns across multiple simulated histories.
 
----
+Each simulation proceeds through successive epochs, where actions change the world and influence subsequent decisions.
 
-## Architecture Overview
+**One run produces one possible history. Multiple runs produce an ensemble of alternative histories.**
 
-Centaur consists of three conceptual components:
+*![LLM Orchestration](images/Orchestra.png)*
 
-### 1. ZeitWorld  
-Transforms raw geopolitical or narrative text into a structured, faceted world-state representation.
+## Middle East Oil Security (MOS)
 
-Think of it as a world pre-processor.
+The first implementation of MC++ simulates a US–Iran geopolitical crisis involving oil security in the Persian Gulf.
 
-### 2. Centaur  
-Acts as a neutral adjudicator.  
-Given a world-state and a proposed action, it produces a structured evaluation.
+Repeated simulations explore alternative paths of escalation, stalemate and de-escalation.
 
-It does not pursue interests.
+*[Insert MOS Results / Architecture Diagram]*
 
-### 3. Chanakya (Optional)  
-Represents an incentive-driven actor.  
-Given the updated world-state, it generates strategic responses aligned with its own objectives.
+## What It Is — and Is Not
 
-It is explicitly not neutral.
+Monte Carlo++ is an experimental platform for exploring strategic possibilities, **not a prediction engine**.
 
----
+Its LLM-generated probabilities are subjective assessments, not empirically validated forecasts.
 
-## Design Principle
+## Documentation
 
-Each component has:
+- [Original Centaur Architecture](README_OLD.md)
+- [Monte Carlo++ — Architecture and Methodology](Documentation/MonteCarloPlus.md)
+- [Alpha Centaur — Original Prototype](Alpha_Centaur.ipynb)
 
-- A sharply defined role  
-- A dedicated instruction file  
-- Stable behavior across turns  
+## The Bottom Line
 
-Roles are separated deliberately. The idea is to prevent descriptive, evaluative and strategic reasoning from blending into one undifferentiated prompt.
+**Traditional Monte Carlo quantifies numerical uncertainty.**
 
-Human oversight is expected between stages.
+**Monte Carlo++ explores strategic possibilities through stochastic sampling and LLM-based reasoning.**
 
-This is simulation, not automation.
-
----
-
-## How It Works (High Level)
-
-1. Construct or ingest a narrative description of the world.
-2. ZeitWorld converts it into a faceted representation.
-3. A human proposes an action.
-4. Centaur evaluates the action relative to the current world-state.
-5. Optionally, Chanakya generates a strategic response.
-6. The world-state can then be updated and the cycle repeated.
-
-All outputs are text and can be manually modified before proceeding.
-
-![Centaur Workflow](https://raw.githubusercontent.com/prithwis/Centaur/refs/heads/main/images/CentaurPipeline.png)
-
----
-
-## Requirements
-
-- A modern browser - Chrome, Edge
-- A GMail ID to use the free Google Colab VM platform
-- A login ID to access an LLM API (OpenAI, Gemini, Claude, etc.)
-- An API key with sufficient credits, stored as a "secret" associated with the the GMail ID
-
-The prototype currently uses `gpt-4o-mini` for cost efficiency, but any compatible model can be substituted.
-
----
-
-## Running Alpha Centaur
-
-The easiest way to run the prototype is via the provided Google Colab notebook.
-
-### Steps
-
-1. Go to [Alpha Centaur](https://github.com/prithwis/Centaur/blob/main/Alpha_Centaur.ipynb)
-2. Open the notebook in Google Colab by pressing the blue button. You need a GMail ID to create the Notebook in your Google Drive
-3. Insert your API key in the designated cell.
-4. Run cells sequentially.
-5. Modify world descriptions, actions and role instructions as needed, by substituting your text files.
-
-No advanced Python knowledge is required. Prompt design and world construction are more important than code complexity.
-
----
-
-## Customization
-
-You can modify:
-
-- Role definition files (highly encouraged)
-- World facets and structure
-- Adjudication criteria
-- Model selection
-- Simulation loop depth
-
-Centaur is intentionally modular and text-driven.
-
----
-
-## Intended Use Cases
-
-- Geopolitical simulations
-- Classroom strategy games
-- Corporate scenario analysis
-- Structured case study adjudication
-- Experiments in human–AI collaborative reasoning
-
----
-
-## What This Is Not
-
-- A prediction engine  
-- A reinforcement learning system  
-- A fully autonomous agent  
-- A claim of general intelligence  
-
-It is a structured simulation framework built on top of LLM capabilities.
-
----
-
-## Status
-
-**Alpha.**
-
-Expect rough edges.  
-Expect to edit prompts.  
-Expect to experiment.
-
-That is the point.
-
----
-
-## Final Note
-
-Centaur was originally built because one faculty member cannot credibly adjudicate semiconductor geopolitics, rare earth supply chains, nuclear regulation and AI infrastructure policy all at once.
-
-An LLM can help.  
-A structured architecture helps more.
-
-Feedback, forks and thoughtful criticism are welcome.
-
-
-## License
-
-See the `LICENSE` file for details.
-
----
-
-> Strategy is easy in clean worlds.  
-> Centaur exists for the messy ones.
+*Manav Niti, Yantra Shakti.*
 
 
 # Centaur

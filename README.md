@@ -32,9 +32,16 @@ Each simulation proceeds through successive epochs, where actions change the wor
 
 The first implementation of MC++ simulates a US–Iran geopolitical crisis involving oil security in the Persian Gulf.
 
-Repeated simulations explore alternative paths of escalation, stalemate and de-escalation.
+An experiment with **40 simulations for each of two alternative triggers** produced the following results:
 
-*[Insert MOS Results / Architecture Diagram]*
+| Outcome | Iran Closes Hormuz | US Offers De-escalation |
+|---|---:|---:|
+| Escalation | 36 (90%) | 2 (5%) |
+| Stalemate | 3 (7.5%) | 18 (45%) |
+| De-escalation | 1 (2.5%) | 20 (50%) |
+| **Total** | **40** | **40** |
+
+These are simulated outcomes, not real-world forecasts. They illustrate how different initial triggers can lead to markedly different distributions of alternative histories.
 
 ## What It Is — and Is Not
 
@@ -45,7 +52,7 @@ Its LLM-generated probabilities are subjective assessments, not empirically vali
 ## Documentation
 
 - [Original Centaur Architecture](README_OLD.md)
-- [Monte Carlo++ — Architecture and Methodology](Documentation/MonteCarloPlus.md)
+- [Monte Carlo++ — Architecture and Methodology](Documentation/MCplus_Explanations.md)
 - [Alpha Centaur — Original Prototype](Alpha_Centaur.ipynb)
 
 ## The Bottom Line

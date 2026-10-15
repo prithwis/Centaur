@@ -67,6 +67,7 @@ Its LLM-generated probabilities are subjective assessments, not empirically vali
 - [Original Centaur Architecture](README_OLD.md)
 - [Monte Carlo++ — Architecture and Methodology](Documentation/MCplus_Explanations.md)
 - [Alpha Centaur — Original Prototype](Alpha_Centaur.ipynb)
+- [MOS - MonteCarlo++](MOS_MonteCarlo++.ipynb) -- Current implementation
 
 ## The Bottom Line
 

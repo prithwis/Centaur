@@ -80,7 +80,7 @@ Its LLM-generated probabilities are subjective assessments, not empirically vali
 
 # Centaur
 
-![Centaur Concept](images/logo-L.jpg)
+![Centaur Concept](images/logo-S.png)
 
 
 
